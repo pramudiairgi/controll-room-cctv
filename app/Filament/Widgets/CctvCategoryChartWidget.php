@@ -9,7 +9,7 @@ class CctvCategoryChartWidget extends ChartWidget
 {
     protected ?string $heading = 'CCTV by Category';
 
-    protected ?int $sort = 2;
+    protected static ?int $sort = 2;
 
     protected function getType(): string
     {
