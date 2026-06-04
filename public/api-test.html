@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>API Test - Control Room</title>
+<style>
+* { box-sizing: border-box; margin: 0; }
+body { font-family: system-ui, sans-serif; background: #f5f5f5; padding: 2rem; }
+.container { max-width: 900px; margin: 0 auto; }
+h1 { margin-bottom: 1.5rem; color: #1a1a2e; }
+.card { background: #fff; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.card h3 { margin-bottom: .75rem; color: #333; font-size: .95rem; text-transform: uppercase; letter-spacing: .5px; }
+.row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: .5rem; }
+input, select { padding: .5rem .75rem; border: 1px solid #ccc; border-radius: 6px; font-size: .875rem; flex: 1; min-width: 150px; }
+button { padding: .5rem 1rem; border: none; border-radius: 6px; font-size: .875rem; cursor: pointer; background: #1a1a2e; color: #fff; }
+button:active { opacity: .8; }
+button.green { background: #059669; }
+button.red { background: #dc2626; }
+button.orange { background: #d97706; }
+pre { background: #1e1e2e; color: #a6e3a1; padding: 1rem; border-radius: 6px; font-size: .8rem; overflow-x: auto; white-space: pre-wrap; margin-top: .5rem; max-height: 400px; overflow-y: auto; }
+pre.error { color: #f38ba8; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .75rem; font-weight: 600; }
+.badge.get { background: #dbeafe; color: #1d4ed8; }
+.badge.post { background: #dcfce7; color: #15803d; }
+.badge.patch { background: #fef3c7; color: #92400e; }
+.badge.delete { background: #fee2e2; color: #b91c1c; }
+.badge.put { background: #e0e7ff; color: #4338ca; }
+.token-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: .75rem; word-break: break-all; font-family: monospace; font-size: .8rem; margin-bottom: 1rem; display: none; }
+.token-box.visible { display: block; }
+input[type="text"].wide { width: 100%; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📹 Control Room API Test</h1>
+
+  <div class="card">
+    <h3>🔐 Auth</h3>
+    <div class="row">
+      <input type="email" id="loginEmail" value="admin@demo.test" placeholder="Email">
+      <input type="password" id="loginPass" value="password" placeholder="Password">
+      <button class="green" onclick="login()">Login</button>
+    </div>
+    <div id="tokenBox" class="token-box"></div>
+    <div class="row">
+      <button onclick="logout()" class="red">Logout</button>
+      <button onclick="me()">Me</button>
+    </div>
+    <pre id="authResult"></pre>
+  </div>
+
+  <div class="card">
+    <h3>📡 CCTVs</h3>
+    <div class="row">
+      <button onclick="api('/api/cctvs?per_page=5', 'GET')"><span class="badge get">GET</span> List</button>
+      <button onclick="api('/api/cctvs/map', 'GET')"><span class="badge get">GET</span> Map</button>
+      <button onclick="api('/api/cctvs?category=public_facility', 'GET')"><span class="badge get">GET</span> Filter (public)</button>
+      <button onclick="api('/api/cctvs?q=Sayung', 'GET')"><span class="badge get">GET</span> Search</button>
+    </div>
+    <div class="row">
+      <input type="number" id="cctvId" placeholder="CCTV ID" value="1" style="max-width: 100px">
+      <button onclick="showCctv()"><span class="badge get">GET</span> Show</button>
+      <button onclick="api('/api/cctvs/'+document.getElementById('cctvId').value+'/status', 'PATCH', {status:'maintenance'})" class="orange"><span class="badge patch">PATCH</span> Set Maintenance</button>
+      <button onclick="api('/api/cctvs/'+document.getElementById('cctvId').value+'/status', 'PATCH', {status:'active'})" class="green"><span class="badge patch">PATCH</span> Set Active</button>
+    </div>
+    <div class="row">
+      <input type="text" id="youtubeUrl" placeholder="YouTube URL" value="https://youtu.be/tuCzMVja0wI" class="wide">
+      <button onclick="setYoutube()" class="orange"><span class="badge post">POST</span> Set YouTube</button>
+    </div>
+    <div class="row">
+      <input type="text" id="newCctvName" placeholder='{"name":"CCTV Baru","category":"security","latitude":-6.9,"longitude":110.6,"status":"active"}' class="wide">
+      <button onclick="createCctv()" class="green"><span class="badge post">POST</span> Create</button>
+      <button onclick="deleteCctv()" class="red"><span class="badge delete">DELETE</span> Delete</button>
+    </div>
+    <pre id="cctvResult"></pre>
+  </div>
+
+  <div class="card">
+    <h3>👥 Users</h3>
+    <div class="row">
+      <button onclick="api('/api/users', 'GET')"><span class="badge get">GET</span> List</button>
+      <input type="number" id="userId" placeholder="User ID" value="2" style="max-width: 100px">
+      <button onclick="showUser()"><span class="badge get">GET</span> Show</button>
+      <button onclick="deleteUser()" class="red"><span class="badge delete">DELETE</span> Delete</button>
+    </div>
+    <pre id="userResult"></pre>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ Error Tests</h3>
+    <div class="row">
+      <button onclick="errorTest('/api/cctvs/99999')" class="orange">404</button>
+      <button onclick="errorTest('/api/cctvs', 'GET', null, 'bad-token')" class="orange">401 Bad Token</button>
+      <button onclick="api('/api/cctvs', 'POST', {name:'',category:'bad'})" class="orange">422 Validation</button>
+      <button onclick="api('/api/users/1', 'DELETE')" class="orange">422 Delete Self</button>
+    </div>
+    <pre id="errorResult"></pre>
+  </div>
+</div>
+
+<script>
+let TOKEN = '';
+
+async function request(method, path, body, tokenOverride) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  const t = tokenOverride ?? TOKEN;
+  if (t) opts.headers['Authorization'] = 'Bearer ' + t;
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(path, opts);
+  const text = await res.text();
+  try { return { status: res.status, data: JSON.parse(text) }; }
+  catch { return { status: res.status, data: text }; }
+}
+
+function showResult(el, res) {
+  const isError = res.status >= 400;
+  el.className = isError ? 'error' : '';
+  el.textContent = res.status + ' ' + (isError ? '⚠️' : '✅') + '\n' + JSON.stringify(res.data, null, 2);
+}
+
+async function login() {
+  const res = await request('POST', '/api/auth/login', { email: document.getElementById('loginEmail').value, password: document.getElementById('loginPass').value });
+  const box = document.getElementById('tokenBox');
+  if (res.data?.data?.token) {
+    TOKEN = res.data.data.token;
+    box.textContent = 'Bearer ' + TOKEN;
+    box.className = 'token-box visible';
+  }
+  showResult(document.getElementById('authResult'), res);
+}
+
+async function logout() {
+  const res = await request('POST', '/api/auth/logout');
+  TOKEN = '';
+  document.getElementById('tokenBox').className = 'token-box';
+  showResult(document.getElementById('authResult'), res);
+}
+
+async function me() {
+  const res = await request('GET', '/api/auth/me');
+  showResult(document.getElementById('authResult'), res);
+}
+
+async function api(path, method, body) {
+  const res = await request(method, path, body);
+  const target = path.includes('user') ? document.getElementById('userResult') : document.getElementById('cctvResult');
+  showResult(target, res);
+}
+
+async function showCctv() {
+  const id = document.getElementById('cctvId').value;
+  const res = await request('GET', '/api/cctvs/' + id);
+  showResult(document.getElementById('cctvResult'), res);
+}
+
+function showUser() {
+  api('/api/users/' + document.getElementById('userId').value, 'GET');
+}
+
+function setYoutube() {
+  const id = document.getElementById('cctvId').value;
+  const url = document.getElementById('youtubeUrl').value;
+  api('/api/cctvs/' + id + '/youtube', 'POST', { youtube_url: url });
+}
+
+function createCctv() {
+  try {
+    const data = JSON.parse(document.getElementById('newCctvName').value);
+    api('/api/cctvs', 'POST', data);
+  } catch {
+    api('/api/cctvs', 'POST', { name: 'CCTV Browser Test', category: 'security', latitude: -6.9, longitude: 110.6, status: 'active' });
+  }
+}
+
+function deleteCctv() {
+  const id = document.getElementById('cctvId').value;
+  api('/api/cctvs/' + id, 'DELETE');
+}
+
+function deleteUser() {
+  api('/api/users/' + document.getElementById('userId').value, 'DELETE');
+}
+
+async function errorTest(path, method, body, token) {
+  const res = await request(method || 'GET', path, body, token);
+  showResult(document.getElementById('errorResult'), res);
+}
+</script>
+</body>
+</html>
