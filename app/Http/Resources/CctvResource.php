@@ -16,6 +16,7 @@ class CctvResource extends JsonResource
             'location' => $this->location,
             'latitude' => (float) $this->latitude,
             'longitude' => (float) $this->longitude,
+            'stream_id' => $this->stream_id,
             'youtube_url' => $this->youtube_url,
             'status' => $this->status?->value,
             'notes' => $this->notes,
