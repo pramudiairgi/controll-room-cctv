@@ -42,7 +42,7 @@ class CctvForm
                     ->dehydrated(),
                 Select::make('status')
                     ->options(CctvStatus::class)
-                    ->default('active')
+                    ->default('online')
                     ->required(),
                 Textarea::make('notes')
                     ->columnSpanFull(),

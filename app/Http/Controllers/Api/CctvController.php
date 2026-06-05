@@ -53,7 +53,7 @@ class CctvController extends Controller
 
     public function map(): JsonResponse
     {
-        $cctvs = Cctv::where('status', 'active')->get();
+        $cctvs = Cctv::where('status', 'online')->get();
 
         return response()->json([
             'data' => CctvResource::collection($cctvs),
@@ -114,7 +114,10 @@ class CctvController extends Controller
 
     public function updateStatus(UpdateCctvStatusRequest $request, Cctv $cctv): JsonResponse
     {
-        $cctv->update(['status' => $request->status]);
+        $cctv->update([
+            'status' => $request->status,
+            'failed_checks_count' => 0,
+        ]);
 
         return response()->json([
             'data' => new CctvResource($cctv),

@@ -21,7 +21,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.6639,
                 'youtube_url' => 'https://www.youtube.com/watch?v=0T9mhMrwBAk',
                 'stream_id' => '0T9mhMrwBAk',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -32,7 +32,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.6390,
                 'youtube_url' => 'https://www.youtube.com/watch?v=A2Lgrc0B4Rw',
                 'stream_id' => 'A2Lgrc0B4Rw',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -43,7 +43,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.4989,
                 'youtube_url' => 'https://www.youtube.com/watch?v=Cn3yyH-KTOE',
                 'stream_id' => 'Cn3yyH-KTOE',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -54,7 +54,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.6398,
                 'youtube_url' => 'https://www.youtube.com/watch?v=GHuRrOnW2MQ',
                 'stream_id' => 'GHuRrOnW2MQ',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -65,7 +65,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.6400,
                 'youtube_url' => 'https://www.youtube.com/watch?v=SUhOdlj8aW8',
                 'stream_id' => 'SUhOdlj8aW8',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -76,7 +76,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.5050,
                 'youtube_url' => 'https://www.youtube.com/watch?v=XoqlfevtBaE',
                 'stream_id' => 'XoqlfevtBaE',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -87,7 +87,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.5052,
                 'youtube_url' => 'https://www.youtube.com/watch?v=axG6-jsmVqI',
                 'stream_id' => 'axG6-jsmVqI',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -98,7 +98,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.4991,
                 'youtube_url' => 'https://www.youtube.com/watch?v=dTQ88A0B87Y',
                 'stream_id' => 'dTQ88A0B87Y',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -109,7 +109,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.7050,
                 'youtube_url' => 'https://www.youtube.com/watch?v=dY070ndSob0',
                 'stream_id' => 'dY070ndSob0',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -120,7 +120,7 @@ class CctvSeeder extends Seeder
                 'longitude' => 110.6394,
                 'youtube_url' => 'https://www.youtube.com/watch?v=uM1gksCoh8I',
                 'stream_id' => 'uM1gksCoh8I',
-                'status' => 'active',
+                'status' => 'online',
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
         ];

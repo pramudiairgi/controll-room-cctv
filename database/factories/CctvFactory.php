@@ -38,6 +38,7 @@ class CctvFactory extends Factory
             'youtube_url' => $youtubeUrl,
             'stream_id' => $youtubeUrl ? Cctv::extractYouTubeId($youtubeUrl) : null,
             'status' => $this->faker->randomElement(array_values(CctvStatus::cases()))->value,
+            'failed_checks_count' => 0,
             'notes' => $this->faker->sentence,
         ];
     }

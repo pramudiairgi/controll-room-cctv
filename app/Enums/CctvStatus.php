@@ -6,16 +6,16 @@ use Filament\Support\Contracts\HasLabel;
 
 enum CctvStatus: string implements HasLabel
 {
-    case Active = 'active';
-    case Inactive = 'inactive';
-    case Maintenance = 'maintenance';
+    case Online = 'online';
+    case Warning = 'warning';
+    case Offline = 'offline';
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::Active => 'Active',
-            self::Inactive => 'Inactive',
-            self::Maintenance => 'Maintenance',
+            self::Online => 'Online',
+            self::Warning => 'Warning',
+            self::Offline => 'Offline',
         };
     }
 }
