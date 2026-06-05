@@ -18,6 +18,7 @@ class Cctv extends Model
         'latitude',
         'longitude',
         'stream_id',
+        'youtube_url',
         'status',
         'notes',
     ];
