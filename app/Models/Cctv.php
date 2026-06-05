@@ -36,11 +36,11 @@ class Cctv extends Model
             return null;
         }
 
-        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url, $matches)) {
+        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|shorts\/|live\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([0-9A-Za-z_-]{11})/', $url, $matches)) {
             return $matches[1];
         }
 
-        if (preg_match('/^[^"&?\/\s]{11}$/', $url)) {
+        if (preg_match('/^[0-9A-Za-z_-]{11}$/', $url)) {
             return $url;
         }
 

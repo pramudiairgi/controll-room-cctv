@@ -23,6 +23,10 @@ class CctvResourceTest extends TestCase
             'https://www.youtube.com/v/dQw4w9WgXcQ' => 'dQw4w9WgXcQ',
             'https://youtube.com/v/dQw4w9WgXcQ?version=3' => 'dQw4w9WgXcQ',
             'https://www.youtube.com/watch?v=dQw4w9WgXcQ' => 'dQw4w9WgXcQ',
+            'https://www.youtube.com/shorts/dQw4w9WgXcQ' => 'dQw4w9WgXcQ',
+            'https://youtube.com/shorts/dQw4w9WgXcQ?feature=share' => 'dQw4w9WgXcQ',
+            'https://www.youtube.com/live/dQw4w9WgXcQ' => 'dQw4w9WgXcQ',
+            'https://youtube.com/live/dQw4w9WgXcQ?si=abc123' => 'dQw4w9WgXcQ',
             'dQw4w9WgXcQ' => 'dQw4w9WgXcQ', // raw ID
         ];
 
@@ -37,9 +41,9 @@ class CctvResourceTest extends TestCase
             $youtubeUrl = $data['youtube_url'] ?? '';
 
             // This is the exact logic from CctvResource::form()
-            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $youtubeUrl, $matches)) {
+            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|shorts\/|live\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([0-9A-Za-z_-]{11})/', $youtubeUrl, $matches)) {
                 $data['stream_id'] = $matches[1];
-            } elseif (!empty($youtubeUrl) && preg_match('/^[^"&?\/\s]{11}$/', $youtubeUrl)) {
+            } elseif (!empty($youtubeUrl) && preg_match('/^[0-9A-Za-z_-]{11}$/', $youtubeUrl)) {
                 $data['stream_id'] = $youtubeUrl;
             }
 
@@ -70,9 +74,9 @@ class CctvResourceTest extends TestCase
             $youtubeUrl = $data['youtube_url'] ?? '';
 
             // Apply the same logic
-            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $youtubeUrl, $matches)) {
+            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|shorts\/|live\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([0-9A-Za-z_-]{11})/', $youtubeUrl, $matches)) {
                 $data['stream_id'] = $matches[1];
-            } elseif (!empty($youtubeUrl) && preg_match('/^[^"&?\/\s]{11}$/', $youtubeUrl)) {
+            } elseif (!empty($youtubeUrl) && preg_match('/^[0-9A-Za-z_-]{11}$/', $youtubeUrl)) {
                 $data['stream_id'] = $youtubeUrl;
             }
 
