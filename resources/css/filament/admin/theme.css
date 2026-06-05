@@ -1,0 +1,511 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/admin/**/*';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.fi-sidebar[class] {
+    background: transparent !important;
+    border-right: none !important;
+    box-shadow: none !important;
+}
+
+.fi-sidebar.fi-sidebar-open {
+    box-shadow: none;
+}
+
+.fi-sidebar-header {
+    border-bottom: none !important;
+    padding: 0.75rem 1.875rem 0.75rem 0.5rem;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header {
+    padding: 0.75rem 0.5rem;
+}
+
+.fi-sidebar-open .fi-sidebar-logo-toggle {
+    width: auto !important;
+    height: auto !important;
+    gap: 0.5rem;
+}
+
+.fi-logo-toggle-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.fi-sidebar-open .fi-logo-toggle-icon {
+    display: none;
+}
+
+.fi-sidebar-header-logo-ctn {
+    overflow: hidden !important;
+    transition: width 0.3s ease;
+}
+
+.fi-sidebar-header-logo-ctn .fi-logo {
+    align-items: center;
+    display: flex;
+    margin-inline-start: 0 !important;
+}
+
+.fi-logo-sync {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+}
+
+.fi-logo-sync-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.fi-logo-sync-icon svg,
+.fi-logo-sync-icon img {
+    width: 28px;
+    height: 28px;
+}
+
+.fi-logo-sync-text {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.3s ease 0.05s, opacity 0.25s ease 0.05s;
+    margin-right: 0.75rem;
+}
+
+.fi-sidebar-open .fi-logo-sync-text {
+    max-width: 200px;
+    opacity: 1;
+}
+
+.fi-logo-sync-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: 0.03em;
+}
+
+.fi-logo-sync-sub {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: #94a3b8;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.fi-sidebar-nav {
+    padding: 0.75rem 0.5rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.fi-sidebar-nav-groups {
+    gap: 0.125rem;
+    width: 100%;
+}
+
+.fi-sidebar-item-btn {
+    border-radius: 9999px;
+    padding: 0.625rem 0.875rem;
+    margin: 0.125rem 0.5rem;
+    transition: all 0.15s ease;
+}
+
+.fi-sidebar-item-btn .fi-icon {
+    color: #64748b !important;
+    transition: color 0.15s ease;
+}
+
+.fi-sidebar-item-btn .fi-icon,
+.fi-sidebar-item-btn .fi-icon svg {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn {
+    justify-content: center;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    aspect-ratio: 1;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-label {
+    display: none;
+}
+
+.fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav-groups {
+    align-items: center;
+}
+
+.fi-sidebar-item-btn:hover {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.fi-sidebar-item-btn:hover .fi-icon {
+    color: #1e293b !important;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background: rgba(16, 185, 129, 0.1) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-icon {
+    color: #10b981 !important;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: #059669 !important;
+    font-weight: 600;
+}
+
+.fi-sidebar-item-label {
+    color: #475569 !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.fi-sidebar-group-label {
+    color: #94a3b8 !important;
+    font-weight: 600;
+    font-size: 0.675rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.625rem 0.875rem 0.25rem;
+}
+
+.fi-sidebar-group-btn .fi-icon {
+    color: #94a3b8 !important;
+}
+
+.fi-sidebar-close-collapse-sidebar-btn,
+.fi-sidebar-open-collapse-sidebar-btn {
+    display: none !important;
+}
+
+@media (min-width: 64rem) {
+    .fi-sidebar:not(.fi-sidebar-open) {
+        background: transparent !important;
+        border-right: none !important;
+        box-shadow: none !important;
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header {
+        background: transparent !important;
+        border-bottom: none !important;
+        padding: 0.75rem 0.5rem;
+        min-height: auto;
+        justify-content: center;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header-logo-ctn {
+        justify-content: flex-start;
+        padding-left: 0.5rem;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header-logo-ctn .fi-logo {
+        justify-content: flex-start;
+        margin: 0 !important;
+    }
+
+    .fi-sidebar-logo-toggle {
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        transition: background 0.2s ease;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-logo-toggle {
+        margin: 0;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-logo-toggle:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-logo-toggle:hover .fi-logo-toggle-icon {
+        display: none !important;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-collapse-btn {
+        display: none !important;
+    }
+
+    .fi-sidebar-open .fi-sidebar-collapse-btn {
+        color: #94a3b8 !important;
+    }
+
+    .fi-sidebar-open .fi-sidebar-collapse-btn:hover {
+        color: #475569 !important;
+        background: rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .fi-sidebar-open .fi-sidebar-collapse-btn:hover .fi-collapse-default {
+        display: none !important;
+    }
+
+    .fi-sidebar-open .fi-sidebar-collapse-btn:hover .fi-collapse-hover {
+        display: block !important;
+    }
+
+    .fi-sidebar-expand-icon {
+        display: none;
+        width: 28px;
+        height: 28px;
+        color: #94a3b8;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        flex-shrink: 0;
+        pointer-events: none;
+    }
+
+    .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-logo-toggle:hover .fi-sidebar-expand-icon {
+        display: block;
+    }
+
+    .fi-sidebar-open .fi-sidebar-expand-icon {
+        display: none !important;
+    }
+}
+
+.fi-wi-widget {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+    transition: box-shadow 0.2s ease;
+}
+
+.fi-wi-widget:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+}
+
+.fi-wi-widget .fi-section-header {
+    padding: 1.25rem 1.5rem 0.5rem !important;
+}
+
+.fi-section {
+    border-radius: 12px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: #fff !important;
+}
+
+.dark .fi-section {
+    background: rgba(30, 41, 59, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+
+
+.fi-stats-overview-stat {
+    border-radius: 10px !important;
+    padding: 1.25rem 1.5rem !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-stats-overview-stat::before {
+    display: none !important;
+}
+
+.fi-stats-overview-stat-ctn {
+    border-radius: 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+}
+
+.dark .fi-stats-overview-stat-ctn {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.6) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.fi-stats-overview-stat-header {
+    margin-bottom: 0.75rem;
+}
+
+.fi-stats-overview-stat-header .fi-icon {
+    width: 2rem !important;
+    height: 2rem !important;
+    padding: 0.375rem;
+    border-radius: 8px;
+}
+
+.fi-stat-success .fi-stats-overview-stat-header .fi-icon {
+    background: rgba(16, 185, 129, 0.1) !important;
+    color: #10b981 !important;
+}
+
+.fi-stat-warning .fi-stats-overview-stat-header .fi-icon {
+    background: rgba(245, 158, 11, 0.1) !important;
+    color: #f59e0b !important;
+}
+
+.fi-stat-danger .fi-stats-overview-stat-header .fi-icon {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #ef4444 !important;
+}
+
+.fi-stat-gray .fi-stats-overview-stat-header .fi-icon {
+    background: rgba(107, 114, 128, 0.1) !important;
+    color: #6b7280 !important;
+}
+
+.fi-stats-overview-stat-value {
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+.fi-stats-overview-stat-description {
+    font-size: 0.8rem !important;
+    color: rgba(107, 114, 128, 0.8) !important;
+    margin-top: 0.25rem !important;
+}
+
+.dark .fi-stats-overview-stat-description {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.fi-ta-ctn {
+    border-radius: 12px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .fi-ta-ctn {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-ta-header-ctn {
+    padding: 1.25rem 1.5rem 0.75rem !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .fi-ta-header-ctn {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-ta-header-heading {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+}
+
+.fi-ta-content {
+    padding: 0 !important;
+}
+
+.fi-ta-table th {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(107, 114, 128, 0.7) !important;
+    padding: 0.75rem 1rem !important;
+}
+
+.dark .fi-ta-table th {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.fi-ta-table td {
+    padding: 0.75rem 1rem !important;
+}
+
+.fi-ta-table tr:not(:last-child) td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03) !important;
+}
+
+.dark .fi-ta-table tr:not(:last-child) td {
+    border-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.fi-ta-table tr:hover td {
+    background: rgba(16, 185, 129, 0.02) !important;
+}
+
+.fi-go {
+    border-radius: 12px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .fi-go {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-go-header {
+    padding: 1.25rem 1.5rem 0.75rem !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .fi-go-header {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.fi-go-header-heading {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+}
+
+.fi-go-content {
+    padding: 1rem !important;
+}
+
+.fi-badge {
+    font-weight: 500 !important;
+    padding: 0.125rem 0.625rem !important;
+    border-radius: 6px !important;
+    font-size: 0.75rem !important;
+}
+
+.fi-dropdown-list {
+    border-radius: 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark .fi-dropdown-list {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+.fi-pagination {
+    padding: 0.75rem 1rem !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.03) !important;
+}
+
+.dark .fi-pagination {
+    border-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.fi-stats-overview-stats-ctn {
+    gap: 0.5rem !important;
+}
+
+.fi-stats-overview-stat {
+    padding: 0.875rem 1rem !important;
+}
+
+.fi-stats-overview-stat-header {
+    margin-bottom: 0.25rem !important;
+}
+
+.fi-stats-overview-stat-header .fi-icon {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+
