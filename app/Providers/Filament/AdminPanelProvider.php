@@ -47,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
                 </span>
             '))
             ->brandLogoHeight('1.75rem')
-            ->favicon(asset('images/logo.svg'))
+            ->favicon(asset('images/cctv-seeklogo.png'))
             ->topbar(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
