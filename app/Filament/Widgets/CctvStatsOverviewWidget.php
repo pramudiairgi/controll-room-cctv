@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Cctv;
+use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -14,7 +15,18 @@ class CctvStatsOverviewWidget extends BaseWidget
 
     public function getColumns(): int | array | null
     {
-        return 2;
+        return 4;
+    }
+
+    protected function getHeading(): ?string
+    {
+        $tanggalHariIni = date('d F Y');
+        return "Pemantauan Jaringan - {$tanggalHariIni}";
+    }
+
+    protected function getDescription(): ?string
+    {
+        return 'Status operasional titik kamera diperbarui secara real-time oleh sensor sistem.';
     }
 
     protected function getStats(): array
@@ -31,22 +43,22 @@ class CctvStatsOverviewWidget extends BaseWidget
         return [
             Stat::make('Total CCTV', $total)
                 ->description('Semua CCTV terdaftar')
-                ->descriptionIcon('heroicon-o-circle-stack')
+                ->descriptionIcon('heroicon-o-circle-stack', IconPosition::Before)
                 ->color('gray'),
 
             Stat::make('Online', $online)
-                ->description("aktif")
-                ->descriptionIcon('heroicon-o-check-circle')
+                ->description("Berjalan Normal ({$onlinePct}%)")
+                ->descriptionIcon('heroicon-o-check-circle', IconPosition::Before)
                 ->color('success'),
 
             Stat::make('Warning', $warning)
-                ->description("terganggu")
-                ->descriptionIcon('heroicon-o-exclamation-triangle')
+                ->description("Signal Dalam Gangguan ({$warningPct}%)")
+                ->descriptionIcon('heroicon-o-exclamation-triangle', IconPosition::Before)
                 ->color('warning'),
 
             Stat::make('Offline', $offline)
-                ->description("tidak terhubung")
-                ->descriptionIcon('heroicon-o-x-circle')
+                ->description("Tidak Terhubung ({$offlinePct}%)")
+                ->descriptionIcon('heroicon-o-x-circle', IconPosition::Before)
                 ->color('danger'),
         ];
     }
