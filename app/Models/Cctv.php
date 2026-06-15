@@ -20,6 +20,7 @@ class Cctv extends Model
         'stream_id',
         'youtube_url',
         'status',
+        'is_live',
         'failed_checks_count',
         'notes',
     ];
@@ -27,6 +28,7 @@ class Cctv extends Model
     protected $casts = [
         'status' => CctvStatus::class,
         'category' => AssetCategory::class,
+        'is_live' => 'boolean',
         'failed_checks_count' => 'integer',
         'latitude' => 'decimal:7',
         'longitude' => 'decimal:7',

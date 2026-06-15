@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Emerald,
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->brandName('Sentinel DMK')
+            ->brandName('Controll Room')
             ->brandLogo(new HtmlString('
                 <span class="fi-logo-sync">
                     <svg class="fi-logo-sync-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,8 +41,8 @@ class AdminPanelProvider extends PanelProvider
                         <path d="M16 14h16v6l-8 14h8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="fi-logo-sync-text">
-                        <span class="fi-logo-sync-title">SENTINEL</span>
-                        <span class="fi-logo-sync-sub">DMK</span>
+                        <span class="fi-logo-sync-title">Controll</span>
+                        <span class="fi-logo-sync-sub">Room</span>
                     </span>
                 </span>
             '))

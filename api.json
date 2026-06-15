@@ -537,7 +537,7 @@
                     }
                 }
             },
-            "put": {
+            "patch": {
                 "operationId": "v1.cctvs.update",
                 "tags": [
                     "Cctv"
@@ -859,7 +859,7 @@
                     }
                 }
             },
-            "put": {
+            "patch": {
                 "operationId": "v1.users.update",
                 "tags": [
                     "User"
@@ -1019,8 +1019,18 @@
                     "longitude": {
                         "type": "number"
                     },
+                    "stream_id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "YouTube video ID extracted from youtube_url"
+                    },
                     "youtube_url": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "status": {
                         "type": "string"
@@ -1032,10 +1042,12 @@
                         ]
                     },
                     "created_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "updated_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "required": [
@@ -1045,6 +1057,7 @@
                     "location",
                     "latitude",
                     "longitude",
+                    "stream_id",
                     "youtube_url",
                     "status",
                     "notes",
@@ -1056,9 +1069,9 @@
             "CctvStatus": {
                 "type": "string",
                 "enum": [
-                    "active",
-                    "inactive",
-                    "maintenance"
+                    "online",
+                    "warning",
+                    "offline"
                 ],
                 "title": "CctvStatus"
             },
@@ -1257,13 +1270,16 @@
                         "type": "string"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "email"
                     },
                     "created_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "updated_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "required": [

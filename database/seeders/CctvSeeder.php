@@ -7,9 +7,6 @@ use Illuminate\Database\Seeder;
 
 class CctvSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $cctvs = [
@@ -22,6 +19,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=0T9mhMrwBAk',
                 'stream_id' => '0T9mhMrwBAk',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -33,6 +31,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=A2Lgrc0B4Rw',
                 'stream_id' => 'A2Lgrc0B4Rw',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -44,6 +43,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=Cn3yyH-KTOE',
                 'stream_id' => 'Cn3yyH-KTOE',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -55,6 +55,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=GHuRrOnW2MQ',
                 'stream_id' => 'GHuRrOnW2MQ',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -66,6 +67,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=SUhOdlj8aW8',
                 'stream_id' => 'SUhOdlj8aW8',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -77,6 +79,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=XoqlfevtBaE',
                 'stream_id' => 'XoqlfevtBaE',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -88,6 +91,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=axG6-jsmVqI',
                 'stream_id' => 'axG6-jsmVqI',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -99,6 +103,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=dTQ88A0B87Y',
                 'stream_id' => 'dTQ88A0B87Y',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -110,6 +115,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=dY070ndSob0',
                 'stream_id' => 'dY070ndSob0',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
             [
@@ -121,6 +127,7 @@ class CctvSeeder extends Seeder
                 'youtube_url' => 'https://www.youtube.com/watch?v=uM1gksCoh8I',
                 'stream_id' => 'uM1gksCoh8I',
                 'status' => 'online',
+                'is_live' => true,
                 'notes' => 'Live CCTV Dishub Kab. Demak',
             ],
         ];

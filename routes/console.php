@@ -9,3 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('cctv:check-streams')->everyThirtyMinutes();
+Schedule::command('cctv:check-youtube-live')->everyFifteenMinutes();

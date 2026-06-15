@@ -19,6 +19,7 @@ class CctvResource extends JsonResource
             'stream_id' => $this->stream_id,
             'youtube_url' => $this->youtube_url,
             'status' => $this->status?->value,
+            'is_live' => $this->is_live ?? false,
             'notes' => $this->notes,
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
