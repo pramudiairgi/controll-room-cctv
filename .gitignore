@@ -27,3 +27,7 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/public/__next.*.txt
+/public/index.txt
+/public/**/__next.*.txt
+/public/**/index.txt
