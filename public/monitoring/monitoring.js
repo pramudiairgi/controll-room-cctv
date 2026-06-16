@@ -194,7 +194,21 @@ function showFilterBar() {
   }
 }
 
+function keepFilterBarVisible() {
+  const filterBar = document.querySelector('.filter-bar');
+  if (filterBar) {
+    filterBar.classList.remove('hidden');
+    clearTimeout(filterTimeout);
+    filterTimeout = setTimeout(() => {
+      filterBar.classList.add('hidden');
+    }, 3000);
+  }
+}
+
 document.querySelector('.filter-bar')?.addEventListener('mouseenter', showFilterBar);
 document.querySelector('.monitoring-container')?.addEventListener('mousemove', showFilterBar);
+document.getElementById('search')?.addEventListener('input', keepFilterBarVisible);
+document.getElementById('category-filter')?.addEventListener('change', keepFilterBarVisible);
+document.getElementById('status-filter')?.addEventListener('change', keepFilterBarVisible);
 
 showFilterBar();
