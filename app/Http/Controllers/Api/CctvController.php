@@ -22,7 +22,7 @@ class CctvController extends Controller
         if ($search = $request->q) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'ilike', "%{$search}%")
-                  ->orWhere('location', 'ilike', "%{$search}%");
+                    ->orWhere('location', 'ilike', "%{$search}%");
             });
         }
 
@@ -62,16 +62,11 @@ class CctvController extends Controller
 
     public function store(StoreCctvRequest $request): JsonResponse
     {
-        $cctv = Cctv::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'location' => $request->location,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'stream_id' => $request->stream_id,
-            'status' => $request->status,
-            'notes' => $request->notes,
-        ]);
+        $data = $request->validated();
+        $data['stream_id'] = Cctv::extractYouTubeId($request->youtube_url);
+        unset($data['youtube_url']);
+
+        $cctv = Cctv::create($data);
 
         return response()->json([
             'data' => new CctvResource($cctv),
@@ -90,13 +85,10 @@ class CctvController extends Controller
         $data = $request->validated();
 
         if ($request->has('youtube_url')) {
-            $data['stream_id'] = $request->stream_id;
-            unset($data['youtube_url']);
+            $data['stream_id'] = Cctv::extractYouTubeId($request->youtube_url);
         }
 
-        if ($request->missing('youtube_url') && array_key_exists('youtube_url', $data)) {
-            unset($data['youtube_url']);
-        }
+        unset($data['youtube_url']);
 
         $cctv->update($data);
 
@@ -116,7 +108,6 @@ class CctvController extends Controller
     {
         $cctv->update([
             'status' => $request->status,
-            'failed_checks_count' => 0,
         ]);
 
         return response()->json([

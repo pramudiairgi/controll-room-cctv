@@ -19,7 +19,7 @@ async function loadCameras() {
     }
     applyFilters();
   } catch {
-    alert('Gagal memuat data kamera.');
+    alert('Failed to load camera data.');
   }
 }
 
@@ -140,7 +140,7 @@ function applyFilters() {
   grid.style.gridTemplateColumns = `repeat(${cols}, ${cellW}px)`;
   grid.style.gridTemplateRows = `repeat(${rows}, ${cellH}px)`;
 
-  if (count) count.textContent = `${visibleCount} / ${cameras.length} kamera`;
+  if (count) count.textContent = `${visibleCount} / ${cameras.length} cameras`;
 }
 
 // ── Lazy-load iframes ──────────────────────────────────────

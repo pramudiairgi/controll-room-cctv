@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\AssetCategory;
+use App\Enums\CctvStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\CctvStatus;
-use App\Enums\AssetCategory;
 
 class Cctv extends Model
 {
@@ -21,7 +21,6 @@ class Cctv extends Model
         'youtube_url',
         'status',
         'is_live',
-        'failed_checks_count',
         'notes',
     ];
 
@@ -29,7 +28,6 @@ class Cctv extends Model
         'status' => CctvStatus::class,
         'category' => AssetCategory::class,
         'is_live' => 'boolean',
-        'failed_checks_count' => 'integer',
         'latitude' => 'decimal:7',
         'longitude' => 'decimal:7',
     ];

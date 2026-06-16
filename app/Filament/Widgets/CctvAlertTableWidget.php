@@ -16,18 +16,14 @@ class CctvAlertTableWidget extends BaseTableWidget
 
     protected function getTableHeading(): string
     {
-        return 'CCTV Perlu Perhatian';
+        return 'Offline CCTV';
     }
 
     public function table(Table $table): Table
     {
         return $table
             ->searchable()
-            ->query(fn () => Cctv::where(function ($q) {
-                $q->where('status', CctvStatus::Offline)
-                    ->orWhere('failed_checks_count', '>', 0);
-            })
-                ->orderBy('failed_checks_count', 'desc')
+            ->query(fn () => Cctv::where('status', CctvStatus::Offline)
                 ->orderBy('updated_at', 'desc')
             )
             ->columns([
@@ -38,19 +34,11 @@ class CctvAlertTableWidget extends BaseTableWidget
                 TextColumn::make('status')
                     ->badge()
                     ->sortable(),
-                TextColumn::make('failed_checks_count')
-                    ->label('Gagal Cek')
-                    ->badge()
-                    ->color(fn (int $state): string => match (true) {
-                        $state >= 3 => 'danger',
-                        default => 'gray',
-                    })
-                    ->sortable(),
                 TextColumn::make('category')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('updated_at')
-                    ->label('Terakhir Update')
+                    ->label('Last Updated')
                     ->since()
                     ->sortable(),
             ])

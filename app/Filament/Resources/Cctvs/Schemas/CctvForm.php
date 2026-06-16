@@ -6,8 +6,9 @@ use App\Enums\AssetCategory;
 use App\Enums\CctvStatus;
 use App\Models\Cctv;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class CctvForm
@@ -44,6 +45,9 @@ class CctvForm
                     ->options(CctvStatus::class)
                     ->default('online')
                     ->required(),
+                Toggle::make('is_live')
+                    ->label('Live')
+                    ->default(false),
                 Textarea::make('notes')
                     ->columnSpanFull(),
             ]);

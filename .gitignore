@@ -31,3 +31,4 @@ Thumbs.db
 /public/index.txt
 /public/**/__next.*.txt
 /public/**/index.txt
+test-results/

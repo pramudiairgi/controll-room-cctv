@@ -2,7 +2,7 @@ const API_BASE = '/api';
 
 // Shared data
 const CATEGORIES = [
-  { value: '', label: 'Semua' },
+  { value: '', label: 'All' },
   { value: 'traffic', label: 'Traffic' },
   { value: 'public_facility', label: 'Public Facility' },
   { value: 'disaster', label: 'Disaster' },
@@ -11,7 +11,7 @@ const CATEGORIES = [
 ];
 
 const STATUSES = [
-  { value: '', label: 'Semua Status' },
+  { value: '', label: 'All Status' },
   { value: 'online', label: 'Online' },
   { value: 'offline', label: 'Offline' },
 ];
@@ -45,9 +45,7 @@ async function apiFetch(path, options = {}) {
     ...options.headers,
   };
 
-  console.log(`[API] ${options.method || 'GET'} ${API_BASE}${path}`, token ? '(with token)' : '(no token)');
   const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
-  console.log(`[API] Response: ${response.status}`);
 
   if (response.status === 401) {
     localStorage.removeItem('token');

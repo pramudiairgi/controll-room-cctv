@@ -8,5 +8,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('cctv:check-streams')->everyThirtyMinutes();
-Schedule::command('cctv:check-youtube-live')->everyFifteenMinutes();
+Schedule::command('cctv:check-health')->everyFifteenMinutes();

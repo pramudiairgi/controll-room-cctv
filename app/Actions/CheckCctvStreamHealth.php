@@ -4,42 +4,47 @@ namespace App\Actions;
 
 use App\Enums\CctvStatus;
 use App\Models\Cctv;
-use Illuminate\Support\Facades\Http;
+use App\Services\YoutubeLiveService;
 
 class CheckCctvStreamHealth
 {
-    public function check(Cctv $cctv): void
+    public function __construct(
+        private readonly YoutubeLiveService $youtubeLive,
+    ) {}
+
+    public function checkAll(): array
     {
-        if (!$cctv->stream_id) {
-            return;
+        $cameras = Cctv::whereNotNull('stream_id')->get();
+
+        if ($cameras->isEmpty()) {
+            return ['total' => 0, 'online' => 0, 'offline' => 0];
         }
 
-        $oembedUrl = "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={$cctv->stream_id}&format=json";
+        $ids = $cameras->pluck('stream_id')->toArray();
+        $results = $this->youtubeLive->check($ids);
 
-        try {
-            $response = Http::head($oembedUrl);
+        $online = 0;
+        $offline = 0;
 
-            if ($response->successful()) {
-                $cctv->update([
-                    'failed_checks_count' => 0,
-                    'status' => CctvStatus::Online,
-                ]);
+        foreach ($cameras as $camera) {
+            $isLive = $results[$camera->stream_id] ?? false;
+
+            $camera->update([
+                'is_live' => $isLive,
+                'status' => $isLive ? CctvStatus::Online : CctvStatus::Offline,
+            ]);
+
+            if ($isLive) {
+                $online++;
             } else {
-                $this->handleFailure($cctv);
+                $offline++;
             }
-        } catch (\Exception $e) {
-            $this->handleFailure($cctv);
         }
-    }
 
-    private function handleFailure(Cctv $cctv): void
-    {
-        $cctv->increment('failed_checks_count');
-
-        if ($cctv->failed_checks_count >= 3) {
-            $cctv->update(['status' => CctvStatus::Offline]);
-        } elseif ($cctv->failed_checks_count >= 1) {
-            $cctv->update(['status' => CctvStatus::Warning]);
-        }
+        return [
+            'total' => $cameras->count(),
+            'online' => $online,
+            'offline' => $offline,
+        ];
     }
 }

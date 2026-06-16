@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('api.v1.')->group(function () {
-    Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/auth/login', [AuthController::class, 'login'])
+        ->middleware('throttle:5,1')
+        ->name('auth.login');
 
     Route::get('/cctvs/map', [CctvController::class, 'map'])->name('cctvs.map');
     Route::get('/cctvs', [CctvController::class, 'index'])->name('cctvs.index');

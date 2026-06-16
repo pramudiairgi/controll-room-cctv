@@ -4,7 +4,6 @@ namespace App\Http\Requests\Api;
 
 use App\Enums\AssetCategory;
 use App\Enums\CctvStatus;
-use App\Models\Cctv;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -22,14 +21,5 @@ class UpdateCctvRequest extends FormRequest
             'status' => ['sometimes', 'required', Rule::enum(CctvStatus::class)],
             'notes' => ['nullable', 'string'],
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        if ($this->has('youtube_url')) {
-            $this->merge([
-                'stream_id' => Cctv::extractYouTubeId($this->input('youtube_url')),
-            ]);
-        }
     }
 }

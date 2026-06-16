@@ -8,7 +8,9 @@ class YoutubeLiveService
 {
     public function check(array $videoIds): array
     {
-        if (empty($videoIds)) return [];
+        if (empty($videoIds)) {
+            return [];
+        }
 
         $chunks = array_chunk($videoIds, 50);
         $results = [];
@@ -20,12 +22,14 @@ class YoutubeLiveService
                 'key' => config('services.youtube.api_key'),
             ]);
 
-            if (!$response->successful()) continue;
+            if (! $response->successful()) {
+                continue;
+            }
 
             foreach ($response->json('items', []) as $item) {
                 $id = $item['id'];
                 $details = $item['liveStreamingDetails'] ?? null;
-                $results[$id] = $details && !isset($details['actualEndTime']);
+                $results[$id] = $details && ! isset($details['actualEndTime']);
             }
         }
 

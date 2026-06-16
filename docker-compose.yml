@@ -8,9 +8,9 @@ services:
         ports:
             - "5432:5432"
         environment:
-            POSTGRES_DB: cctv_db
-            POSTGRES_USER: cctv
-            POSTGRES_PASSWORD: rahasia123
+            POSTGRES_DB: ${DB_DATABASE:-cctv_db}
+            POSTGRES_USER: ${DB_USERNAME:-cctv}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
         volumes:
             - cctv_pg_data:/var/lib/postgresql/data
 

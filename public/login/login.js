@@ -22,18 +22,20 @@ async function handleLogin(e) {
 
   errorEl.textContent = '';
   btn.disabled = true;
-  btn.innerHTML = '<span>Masuk...</span>';
+  btn.innerHTML = '<span>Login...</span>';
 
   try {
-    const { data } = await apiFetch('/auth/login', {
+    const response = await apiFetch('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
 
+    const { data } = response;
+
     localStorage.setItem('token', data.token);
     window.location.href = '/dashboard';
-  } catch {
-    errorEl.textContent = 'Email atau password salah';
+  } catch (err) {
+    errorEl.textContent = 'Invalid email or password';
   } finally {
     btn.disabled = false;
     btn.innerHTML = `
@@ -42,7 +44,7 @@ async function handleLogin(e) {
         <path d="M15 12H3"/>
         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
       </svg>
-      <span>Masuk</span>
+      <span>Login</span>
     `;
   }
 }
