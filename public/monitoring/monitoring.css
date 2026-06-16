@@ -69,11 +69,12 @@
   white-space: nowrap;
 }
 
-/* Filter Bar (top-left, horizontal capsule) */
+/* Filter Bar (top center, horizontal capsule) */
 .filter-bar {
   position: fixed;
   top: var(--space-6);
-  left: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: var(--z-panel);
   display: flex;
   flex-direction: column;
