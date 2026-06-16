@@ -1,24 +1,3 @@
-const API_BASE = '/api';
-
-async function apiFetch(path, options = {}) {
-  const token = localStorage.getItem('token');
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
-  };
-
-  const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
-
-  if (response.status === 401) {
-    localStorage.removeItem('token');
-    throw new Error('Unauthorized');
-  }
-
-  if (!response.ok) throw new Error(`API Error: ${response.status}`);
-  return response.json();
-}
-
 async function checkAuth() {
   const token = localStorage.getItem('token');
   if (!token) return;

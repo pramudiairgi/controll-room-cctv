@@ -1,44 +1,13 @@
-const API_BASE = '/api';
-
-async function apiFetch(path, options = {}) {
-  const token = localStorage.getItem('token');
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
-  };
-
-  const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
-
-  if (response.status === 401) {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
-    throw new Error('Unauthorized');
-  }
-
-  if (!response.ok) throw new Error(`API Error: ${response.status}`);
-  return response.json();
-}
-
 let cameras = [];
 let map = null;
 let markers = [];
 let selectedCamera = null;
 
-const categories = [
-  { value: '', label: 'Semua' },
-  { value: 'traffic', label: 'Traffic' },
-  { value: 'public_facility', label: 'Public Facility' },
-  { value: 'disaster', label: 'Disaster' },
-  { value: 'security', label: 'Security' },
-  { value: 'environment', label: 'Environment' },
-];
-
 function renderCategoryFilters() {
   const selects = document.querySelectorAll('.category-filter');
   selects.forEach(select => {
-    select.innerHTML = categories.map(c =>
-      `<option value="${c.value}">${c.label}</option>`
+    select.innerHTML = CATEGORIES.map(c =>
+      `<option value="${c.value}">${escapeHtml(c.label)}</option>`
     ).join('');
   });
 }
@@ -102,10 +71,10 @@ function renderCameraList() {
     <div class="camera-item ${selectedCamera?.id === c.id ? 'active' : ''}"
          data-id="${c.id}">
       <div class="camera-info">
-        <div class="camera-name">${c.name}</div>
-        <div class="camera-location">${c.location || 'Tidak diketahui'}</div>
+        <div class="camera-name">${escapeHtml(c.name)}</div>
+        <div class="camera-location">${escapeHtml(c.location || 'Tidak diketahui')}</div>
       </div>
-      <span class="status-badge ${c.status}">${c.status}</span>
+      <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
     </div>
   `).join('');
 
@@ -144,7 +113,7 @@ function renderMap() {
       }).addTo(map);
 
       marker.on('click', () => selectCamera(c.id));
-      marker.bindTooltip(c.name);
+      marker.bindTooltip(escapeHtml(c.name));
       markers.push(marker);
     }
   });
@@ -170,9 +139,16 @@ function renderDetailPanel() {
   const statusColor = c.status === 'online' ? 'var(--color-success)' :
                       c.status === 'warning' ? 'var(--color-warning)' : 'var(--color-error)';
 
+  const videoHtml = c.stream_id && isValidYouTubeId(c.stream_id)
+    ? `<div class="video-container">
+        <iframe src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+                allow="autoplay; encrypted-media"></iframe>
+      </div>`
+    : '';
+
   panel.innerHTML = `
     <div class="detail-header">
-      <h3>${c.name}</h3>
+      <h3>${escapeHtml(c.name)}</h3>
       <button class="close-btn" id="close-detail">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
@@ -185,22 +161,17 @@ function renderDetailPanel() {
           <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
           <circle cx="12" cy="10" r="3"/>
         </svg>
-        <span>${c.location || 'Tidak diketahui'}</span>
+        <span>${escapeHtml(c.location || 'Tidak diketahui')}</span>
       </div>
       <div class="meta-item">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${statusColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="2"/>
         </svg>
-        <span style="color: ${statusColor}; text-transform: capitalize">${c.status}</span>
+        <span style="color: ${statusColor}; text-transform: capitalize">${escapeHtml(c.status)}</span>
       </div>
-      <div class="meta-item">${c.category.replace('_', ' ')}</div>
+      <div class="meta-item">${escapeHtml(c.category.replace('_', ' '))}</div>
     </div>
-    ${c.stream_id ? `
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/${c.stream_id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-                allow="autoplay; encrypted-media"></iframe>
-      </div>
-    ` : ''}
+    ${videoHtml}
   `;
 
   document.getElementById('close-detail')?.addEventListener('click', closeDetail);
@@ -237,10 +208,12 @@ async function loadUserInfo() {
 }
 
 // Init
-document.getElementById('search')?.addEventListener('input', () => {
+const handleSearch = debounce(() => {
   renderCameraList();
   renderMap();
 });
+
+document.getElementById('search')?.addEventListener('input', handleSearch);
 
 document.getElementById('category-filter')?.addEventListener('change', () => {
   renderCameraList();

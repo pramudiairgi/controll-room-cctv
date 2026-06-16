@@ -1,47 +1,9 @@
-const API_BASE = '/api';
-
-async function apiFetch(path, options = {}) {
-  const token = localStorage.getItem('token');
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
-  };
-
-  const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
-
-  if (response.status === 401) {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
-    throw new Error('Unauthorized');
-  }
-
-  if (!response.ok) throw new Error(`API Error: ${response.status}`);
-  return response.json();
-}
-
 let cameras = [];
 let searchQuery = '';
 let selectedCategory = '';
 let selectedStatus = '';
 let showFilters = false;
 let toolbarTimeout = null;
-
-const categories = [
-  { value: '', label: 'Semua' },
-  { value: 'traffic', label: 'Traffic' },
-  { value: 'public_facility', label: 'Public Facility' },
-  { value: 'disaster', label: 'Disaster' },
-  { value: 'security', label: 'Security' },
-  { value: 'environment', label: 'Environment' },
-];
-
-const statuses = [
-  { value: '', label: 'Semua Status' },
-  { value: 'online', label: 'Online' },
-  { value: 'warning', label: 'Warning' },
-  { value: 'offline', label: 'Offline' },
-];
 
 async function loadCameras() {
   try {
@@ -107,22 +69,22 @@ function renderGrid() {
   grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
   grid.innerHTML = filtered.map(c => {
-    if (c.stream_id) {
+    if (c.stream_id && isValidYouTubeId(c.stream_id)) {
       return `
         <div class="camera-cell">
-          <iframe src="https://www.youtube.com/embed/${c.stream_id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+          <iframe src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
                   allow="autoplay; encrypted-media"
-                  title="${c.name}"></iframe>
+                  title="${escapeHtml(c.name)}"></iframe>
         </div>
       `;
     }
 
     return `
       <div class="camera-cell camera-placeholder">
-        <img src="/thumbnail-offline.svg" alt="Thumbnail ${c.name}" onerror="this.style.display='none'" />
+        <img src="/thumbnail-offline.svg" alt="Thumbnail ${escapeHtml(c.name)}" onerror="this.style.display='none'" />
         <div class="camera-placeholder-info">
-          <p class="camera-placeholder-name">${c.name}</p>
-          <span class="status-badge ${c.status}">${c.status}</span>
+          <p class="camera-placeholder-name">${escapeHtml(c.name)}</p>
+          <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
         </div>
       </div>
     `;
@@ -157,8 +119,8 @@ function resetToolbarTimeout() {
 function renderCategoryFilters() {
   const selects = document.querySelectorAll('.category-filter');
   selects.forEach(select => {
-    select.innerHTML = categories.map(c =>
-      `<option value="${c.value}">${c.label}</option>`
+    select.innerHTML = CATEGORIES.map(c =>
+      `<option value="${c.value}">${escapeHtml(c.label)}</option>`
     ).join('');
   });
 }
@@ -166,8 +128,8 @@ function renderCategoryFilters() {
 function renderStatusFilters() {
   const selects = document.querySelectorAll('.status-filter');
   selects.forEach(select => {
-    select.innerHTML = statuses.map(s =>
-      `<option value="${s.value}">${s.label}</option>`
+    select.innerHTML = STATUSES.map(s =>
+      `<option value="${s.value}">${escapeHtml(s.label)}</option>`
     ).join('');
   });
 }
@@ -175,10 +137,10 @@ function renderStatusFilters() {
 // Init
 document.getElementById('toolbar-toggle')?.addEventListener('click', toggleFilters);
 
-document.getElementById('search')?.addEventListener('input', (e) => {
+document.getElementById('search')?.addEventListener('input', debounce((e) => {
   searchQuery = e.target.value;
   renderGrid();
-});
+}));
 
 document.getElementById('category-filter')?.addEventListener('change', (e) => {
   selectedCategory = e.target.value;
