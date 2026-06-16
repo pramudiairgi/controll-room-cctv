@@ -2,6 +2,7 @@ let cameras = [];
 let searchQuery = '';
 let selectedCategory = '';
 let selectedStatus = '';
+let lastRenderedIds = '';
 
 async function loadCameras() {
   try {
@@ -16,7 +17,6 @@ async function loadCameras() {
 function getFilteredCameras() {
   let filtered = cameras;
 
-  // Status filter
   if (selectedStatus === 'offline') {
     filtered = filtered.filter(c => !c.is_live);
   } else if (selectedStatus) {
@@ -25,12 +25,10 @@ function getFilteredCameras() {
     filtered = filtered.filter(c => c.is_live === true);
   }
 
-  // Category filter
   if (selectedCategory) {
     filtered = filtered.filter(c => c.category === selectedCategory);
   }
 
-  // Search filter
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     filtered = filtered.filter(c =>
@@ -49,6 +47,10 @@ function renderGrid() {
   if (!grid) return;
 
   const filtered = getFilteredCameras();
+  const newIds = filtered.map(c => c.id).join(',');
+
+  if (newIds === lastRenderedIds) return;
+  lastRenderedIds = newIds;
 
   const total = filtered.length;
   if (total === 0) {
@@ -65,38 +67,45 @@ function renderGrid() {
   grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
   grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
-  grid.innerHTML = filtered.map(c => {
+  const fragment = document.createDocumentFragment();
+
+  filtered.forEach(c => {
+    const cell = document.createElement('div');
+    cell.className = 'camera-cell';
+    cell.dataset.id = c.id;
+
     if (c.stream_id && isValidYouTubeId(c.stream_id)) {
-      return `
-        <div class="camera-cell">
-          <div class="camera-placeholder">
-            <img src="/thumbnail-offline.svg" alt="Thumbnail ${escapeHtml(c.name)}" onerror="this.style.display='none'" />
-            <div class="camera-placeholder-info">
-              <p class="camera-placeholder-name">${escapeHtml(c.name)}</p>
-              <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
-            </div>
+      cell.innerHTML = `
+        <div class="camera-placeholder">
+          <img src="/thumbnail-offline.svg" alt="Thumbnail ${escapeHtml(c.name)}" onerror="this.style.display='none'" />
+          <div class="camera-placeholder-info">
+            <p class="camera-placeholder-name">${escapeHtml(c.name)}</p>
+            <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
           </div>
-          <iframe data-src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
-                  allow="autoplay; encrypted-media"
-                  title="${escapeHtml(c.name)}"
-                  loading="lazy"></iframe>
         </div>
       `;
-    }
-
-    return `
-      <div class="camera-cell camera-placeholder">
+      const iframe = document.createElement('iframe');
+      iframe.dataset.src = `https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3`;
+      iframe.allow = 'autoplay; encrypted-media';
+      iframe.title = c.name;
+      iframe.loading = 'lazy';
+      cell.appendChild(iframe);
+    } else {
+      cell.classList.add('camera-placeholder');
+      cell.innerHTML = `
         <img src="/thumbnail-offline.svg" alt="Thumbnail ${escapeHtml(c.name)}" onerror="this.style.display='none'" />
         <div class="camera-placeholder-info">
           <p class="camera-placeholder-name">${escapeHtml(c.name)}</p>
           <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }
 
+    fragment.appendChild(cell);
+  });
+
+  grid.replaceChildren(fragment);
   if (count) count.textContent = `${filtered.length} / ${cameras.length} kamera`;
-
   initLazyLoad();
 }
 
@@ -160,16 +169,19 @@ async function loadUserInfo() {
 // Init
 document.getElementById('search')?.addEventListener('input', debounce((e) => {
   searchQuery = e.target.value;
+  lastRenderedIds = '';
   renderGrid();
 }));
 
 document.getElementById('category-filter')?.addEventListener('change', (e) => {
   selectedCategory = e.target.value;
+  lastRenderedIds = '';
   renderGrid();
 });
 
 document.getElementById('status-filter')?.addEventListener('change', (e) => {
   selectedStatus = e.target.value;
+  lastRenderedIds = '';
   renderGrid();
 });
 
