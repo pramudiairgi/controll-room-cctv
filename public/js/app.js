@@ -13,7 +13,6 @@ const CATEGORIES = [
 const STATUSES = [
   { value: '', label: 'Semua Status' },
   { value: 'online', label: 'Online' },
-  { value: 'warning', label: 'Warning' },
   { value: 'offline', label: 'Offline' },
 ];
 
@@ -46,7 +45,9 @@ async function apiFetch(path, options = {}) {
     ...options.headers,
   };
 
+  console.log(`[API] ${options.method || 'GET'} ${API_BASE}${path}`, token ? '(with token)' : '(no token)');
   const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  console.log(`[API] Response: ${response.status}`);
 
   if (response.status === 401) {
     localStorage.removeItem('token');

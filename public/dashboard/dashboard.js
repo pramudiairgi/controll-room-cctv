@@ -5,21 +5,21 @@ let selectedCamera = null;
 let selectedStatus = '';
 
 function renderCategoryFilters() {
-  const selects = document.querySelectorAll('.category-filter');
-  selects.forEach(select => {
+  const select = document.getElementById('category-filter');
+  if (select) {
     select.innerHTML = CATEGORIES.map(c =>
       `<option value="${c.value}">${escapeHtml(c.label)}</option>`
     ).join('');
-  });
+  }
 }
 
 function renderStatusFilters() {
-  const selects = document.querySelectorAll('.status-filter');
-  selects.forEach(select => {
+  const select = document.getElementById('status-filter');
+  if (select) {
     select.innerHTML = STATUSES.map(s =>
       `<option value="${s.value}">${escapeHtml(s.label)}</option>`
     ).join('');
-  });
+  }
 }
 
 async function loadCameras() {
