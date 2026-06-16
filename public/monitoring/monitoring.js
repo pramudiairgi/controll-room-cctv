@@ -111,17 +111,19 @@ function applyFilters() {
   const aspect = vw / vh;
 
   let cols, rows;
-  if (visibleCount === 0) {
+  if (visibleCount <= 1) {
     cols = 1;
     rows = 1;
   } else {
-    cols = Math.max(1, Math.ceil(Math.sqrt(visibleCount * aspect)));
-    rows = Math.max(1, Math.ceil(visibleCount / cols));
+    cols = Math.ceil(Math.sqrt(visibleCount * aspect));
+    cols = Math.min(cols, visibleCount);
+    rows = Math.ceil(visibleCount / cols);
     const cellW = vw / cols;
     const cellH = cellW * (9 / 16);
     if (cellH * rows > vh) {
-      rows = Math.max(1, Math.floor(vh / cellH));
-      cols = Math.max(1, Math.ceil(visibleCount / rows));
+      rows = Math.floor(vh / cellH);
+      rows = Math.max(rows, 1);
+      cols = Math.ceil(visibleCount / rows);
     }
   }
 
