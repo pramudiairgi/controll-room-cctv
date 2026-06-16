@@ -92,6 +92,11 @@
   animation: glass-in 0.3s var(--easing-default) forwards;
 }
 
+.filter-item {
+  display: flex;
+  align-items: center;
+}
+
 .search-input {
   max-width: 240px;
   flex-shrink: 0;
