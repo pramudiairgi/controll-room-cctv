@@ -164,7 +164,7 @@
 /* Stats Panel */
 .stats-panel {
   position: fixed;
-  top: 80px;
+  top: 72px;
   right: var(--space-6);
   z-index: var(--z-stats);
   display: flex;
