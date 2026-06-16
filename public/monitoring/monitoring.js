@@ -27,12 +27,8 @@ async function loadCameras() {
 function getFilteredIds() {
   let filtered = cameras;
 
-  if (selectedStatus === 'offline') {
-    filtered = filtered.filter(c => !c.is_live);
-  } else if (selectedStatus) {
+  if (selectedStatus) {
     filtered = filtered.filter(c => c.status === selectedStatus);
-  } else {
-    filtered = filtered.filter(c => c.is_live === true);
   }
 
   if (selectedCategory) {
