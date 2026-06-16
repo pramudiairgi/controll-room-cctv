@@ -1,0 +1,80 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+.login-form {
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.login-form h1 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-primary);
+  position: relative;
+}
+
+.login-form .subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: calc(-1 * var(--space-2));
+  position: relative;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  position: relative;
+}
+
+.form-group label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.form-group input {
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--easing-default);
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+}
+
+.error-message {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  text-align: center;
+  min-height: 20px;
+  position: relative;
+}
+
+.login-form .btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  position: relative;
+}
+
+.login-form .btn-primary svg {
+  flex-shrink: 0;
+}
