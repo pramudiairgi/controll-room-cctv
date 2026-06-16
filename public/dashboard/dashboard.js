@@ -102,7 +102,7 @@ function createPinIcon(status) {
 
 function renderMap() {
   if (!map) {
-    map = L.map('map', { zoomControl: false }).setView([-6.2088, 106.8456], 12);
+    map = L.map('map', { zoomControl: false }).setView([-6.2088, 106.8456], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
@@ -112,6 +112,7 @@ function renderMap() {
   markers.forEach(m => map.removeLayer(m));
   markers = [];
 
+  const bounds = L.latLngBounds();
   const filtered = getFilteredCameras();
   filtered.forEach(c => {
     if (c.latitude && c.longitude) {
@@ -122,8 +123,13 @@ function renderMap() {
       marker.on('click', () => selectCamera(c.id));
       marker.bindTooltip(escapeHtml(c.name));
       markers.push(marker);
+      bounds.extend([c.latitude, c.longitude]);
     }
   });
+
+  if (bounds.isValid()) {
+    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+  }
 }
 
 function selectCamera(id) {
