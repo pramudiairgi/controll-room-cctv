@@ -13,24 +13,33 @@
     <!-- Camera Grid -->
     <div id="camera-grid" class="camera-grid"></div>
 
-    <!-- Top Bar: Search + Filters + Nav -->
-    <div class="top-bar glass-panel">
-      <button id="toolbar-toggle" class="toolbar-toggle" aria-label="Filter">
+    <!-- Filter Group (top-left, stacked) -->
+    <div class="filter-group">
+      <button id="toolbar-toggle" class="filter-toggle glass-panel" aria-label="Filter">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/>
         </svg>
       </button>
 
       <div id="toolbar-filters" class="toolbar-filters hidden">
-        <div class="toolbar-divider"></div>
-        <input id="search" type="text" class="glass-input search-input" placeholder="Search kamera..." />
-        <select id="category-filter" class="glass-select category-filter"></select>
-        <select id="status-filter" class="glass-select status-filter"></select>
+        <div class="filter-item glass-panel">
+          <input id="search" type="text" class="filter-input" placeholder="Search kamera..." />
+        </div>
+
+        <div class="filter-item glass-panel">
+          <select id="category-filter" class="filter-select"></select>
+        </div>
+
+        <div class="filter-item glass-panel">
+          <select id="status-filter" class="filter-select"></select>
+        </div>
       </div>
 
-      <div class="top-bar-spacer"></div>
-
       <span id="camera-count" class="camera-count"></span>
+    </div>
+
+    <!-- Nav Pill (top-right) -->
+    <div class="nav-pill-container glass-panel">
       <a href="/dashboard" class="glass-pill">Dashboard</a>
     </div>
 
