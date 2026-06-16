@@ -2,19 +2,23 @@ let cameras = [];
 let searchQuery = '';
 let selectedCategory = '';
 let selectedStatus = '';
-let lastRenderedIds = '';
+let gridRendered = false;
 
 async function loadCameras() {
   try {
     const { data } = await apiFetch('/cctvs');
     cameras = data;
-    renderGrid();
+    if (!gridRendered) {
+      renderGrid();
+      gridRendered = true;
+    }
+    applyFilters();
   } catch {
     alert('Gagal memuat data kamera.');
   }
 }
 
-function getFilteredCameras() {
+function getFilteredIds() {
   let filtered = cameras;
 
   if (selectedStatus === 'offline') {
@@ -38,38 +42,16 @@ function getFilteredCameras() {
     );
   }
 
-  return filtered;
+  return new Set(filtered.map(c => c.id));
 }
 
 function renderGrid() {
   const grid = document.getElementById('camera-grid');
-  const count = document.getElementById('camera-count');
   if (!grid) return;
-
-  const filtered = getFilteredCameras();
-  const newIds = filtered.map(c => c.id).join(',');
-
-  if (newIds === lastRenderedIds) return;
-  lastRenderedIds = newIds;
-
-  const total = filtered.length;
-  if (total === 0) {
-    grid.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:var(--color-text-secondary)">Tidak ada kamera ditemukan</div>';
-    grid.style.gridTemplateColumns = '1fr';
-    grid.style.gridTemplateRows = '1fr';
-    if (count) count.textContent = `0 / ${cameras.length} kamera`;
-    return;
-  }
-
-  const cols = Math.ceil(Math.sqrt(total * (16/9)));
-  const rows = Math.ceil(total / cols);
-
-  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
   const fragment = document.createDocumentFragment();
 
-  filtered.forEach(c => {
+  cameras.forEach(c => {
     const cell = document.createElement('div');
     cell.className = 'camera-cell';
     cell.dataset.id = c.id;
@@ -105,8 +87,31 @@ function renderGrid() {
   });
 
   grid.replaceChildren(fragment);
-  if (count) count.textContent = `${filtered.length} / ${cameras.length} kamera`;
   initLazyLoad();
+  applyFilters();
+}
+
+function applyFilters() {
+  const grid = document.getElementById('camera-grid');
+  const count = document.getElementById('camera-count');
+  if (!grid) return;
+
+  const visibleIds = getFilteredIds();
+  let visibleCount = 0;
+
+  grid.querySelectorAll('.camera-cell').forEach(cell => {
+    const id = parseInt(cell.dataset.id);
+    const show = visibleIds.has(id);
+    cell.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
+  });
+
+  const cols = visibleCount > 0 ? Math.ceil(Math.sqrt(visibleCount * (16/9))) : 1;
+  const rows = visibleCount > 0 ? Math.ceil(visibleCount / cols) : 1;
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+  if (count) count.textContent = `${visibleCount} / ${cameras.length} kamera`;
 }
 
 function initLazyLoad() {
@@ -169,20 +174,17 @@ async function loadUserInfo() {
 // Init
 document.getElementById('search')?.addEventListener('input', debounce((e) => {
   searchQuery = e.target.value;
-  lastRenderedIds = '';
-  renderGrid();
+  applyFilters();
 }));
 
 document.getElementById('category-filter')?.addEventListener('change', (e) => {
   selectedCategory = e.target.value;
-  lastRenderedIds = '';
-  renderGrid();
+  applyFilters();
 });
 
 document.getElementById('status-filter')?.addEventListener('change', (e) => {
   selectedStatus = e.target.value;
-  lastRenderedIds = '';
-  renderGrid();
+  applyFilters();
 });
 
 document.getElementById('logout-btn')?.addEventListener('click', logout);
