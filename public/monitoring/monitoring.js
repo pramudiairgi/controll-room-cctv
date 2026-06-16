@@ -106,8 +106,25 @@ function applyFilters() {
     if (show) visibleCount++;
   });
 
-  const cols = visibleCount > 0 ? Math.ceil(Math.sqrt(visibleCount * (16/9))) : 1;
-  const rows = visibleCount > 0 ? Math.ceil(visibleCount / cols) : 1;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const aspect = vw / vh;
+
+  let cols, rows;
+  if (visibleCount === 0) {
+    cols = 1;
+    rows = 1;
+  } else {
+    cols = Math.max(1, Math.ceil(Math.sqrt(visibleCount * aspect)));
+    rows = Math.max(1, Math.ceil(visibleCount / cols));
+    const cellW = vw / cols;
+    const cellH = cellW * (9 / 16);
+    if (cellH * rows > vh) {
+      rows = Math.max(1, Math.floor(vh / cellH));
+      cols = Math.max(1, Math.ceil(visibleCount / rows));
+    }
+  }
+
   grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
   grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
@@ -226,3 +243,5 @@ document.getElementById('category-filter')?.addEventListener('change', keepFilte
 document.getElementById('status-filter')?.addEventListener('change', keepFilterBarVisible);
 
 showFilterBar();
+
+window.addEventListener('resize', debounce(applyFilters, 150));
