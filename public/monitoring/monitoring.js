@@ -2,8 +2,6 @@ let cameras = [];
 let searchQuery = '';
 let selectedCategory = '';
 let selectedStatus = '';
-let showFilters = false;
-let toolbarTimeout = null;
 
 async function loadCameras() {
   try {
@@ -53,7 +51,6 @@ function renderGrid() {
 
   const filtered = getFilteredCameras();
 
-  // Calculate grid dimensions
   const total = filtered.length;
   if (total === 0) {
     grid.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:var(--color-text-secondary)">Tidak ada kamera ditemukan</div>';
@@ -113,33 +110,6 @@ function renderStats() {
   }
 }
 
-function toggleFilters() {
-  showFilters = !showFilters;
-  const filtersEl = document.getElementById('toolbar-filters');
-  const toggleBtn = document.getElementById('toolbar-toggle');
-
-  if (showFilters) {
-    filtersEl?.classList.remove('hidden');
-    toggleBtn?.classList.add('active');
-  } else {
-    filtersEl?.classList.add('hidden');
-    toggleBtn?.classList.remove('active');
-  }
-}
-
-function resetToolbarTimeout() {
-  clearTimeout(toolbarTimeout);
-  const filtersEl = document.getElementById('toolbar-filters');
-  filtersEl?.classList.remove('hidden');
-  showFilters = true;
-  document.getElementById('toolbar-toggle')?.classList.add('active');
-  toolbarTimeout = setTimeout(() => {
-    filtersEl?.classList.add('hidden');
-    showFilters = false;
-    document.getElementById('toolbar-toggle')?.classList.remove('active');
-  }, 5000);
-}
-
 function renderCategoryFilters() {
   const select = document.getElementById('category-filter');
   if (select) {
@@ -179,8 +149,6 @@ async function loadUserInfo() {
 }
 
 // Init
-document.getElementById('toolbar-toggle')?.addEventListener('click', toggleFilters);
-
 document.getElementById('search')?.addEventListener('input', debounce((e) => {
   searchQuery = e.target.value;
   renderGrid();
@@ -198,11 +166,7 @@ document.getElementById('status-filter')?.addEventListener('change', (e) => {
 
 document.getElementById('logout-btn')?.addEventListener('click', logout);
 
-document.addEventListener('mousemove', resetToolbarTimeout);
-document.addEventListener('pointermove', resetToolbarTimeout);
-
 renderCategoryFilters();
 renderStatusFilters();
 loadCameras();
 loadUserInfo();
-resetToolbarTimeout();
