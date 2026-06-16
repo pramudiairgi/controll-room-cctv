@@ -12,7 +12,7 @@ class CctvAlertTableWidget extends BaseTableWidget
 {
     protected static ?int $sort = 3;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getTableHeading(): string
     {
@@ -24,9 +24,9 @@ class CctvAlertTableWidget extends BaseTableWidget
         return $table
             ->searchable()
             ->query(fn () => Cctv::where(function ($q) {
-                    $q->whereIn('status', [CctvStatus::Warning, CctvStatus::Offline])
-                        ->orWhere('failed_checks_count', '>', 0);
-                })
+                $q->where('status', CctvStatus::Offline)
+                    ->orWhere('failed_checks_count', '>', 0);
+            })
                 ->orderBy('failed_checks_count', 'desc')
                 ->orderBy('updated_at', 'desc')
             )
@@ -43,7 +43,6 @@ class CctvAlertTableWidget extends BaseTableWidget
                     ->badge()
                     ->color(fn (int $state): string => match (true) {
                         $state >= 3 => 'danger',
-                        $state >= 1 => 'warning',
                         default => 'gray',
                     })
                     ->sortable(),

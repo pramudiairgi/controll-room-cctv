@@ -214,7 +214,6 @@
 }
 
 .stat-dot.online { background: var(--color-success); }
-.stat-dot.warning { background: var(--color-warning); }
 .stat-dot.offline { background: var(--color-error); }
 
 /* User Menu (capsule) */

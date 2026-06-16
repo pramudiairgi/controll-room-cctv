@@ -11,9 +11,9 @@ class CctvStatsOverviewWidget extends BaseWidget
 {
     protected static ?int $sort = 1;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
-    public function getColumns(): int | array | null
+    public function getColumns(): int|array|null
     {
         return 4;
     }
@@ -21,6 +21,7 @@ class CctvStatsOverviewWidget extends BaseWidget
     protected function getHeading(): ?string
     {
         $tanggalHariIni = date('d F Y');
+
         return "Pemantauan Jaringan - {$tanggalHariIni}";
     }
 
@@ -34,11 +35,9 @@ class CctvStatsOverviewWidget extends BaseWidget
         $total = Cctv::count();
         $online = Cctv::where('status', 'online')->count();
         $offline = Cctv::where('status', 'offline')->count();
-        $warning = Cctv::where('status', 'warning')->count();
 
         $onlinePct = $total > 0 ? round(($online / $total) * 100) : 0;
         $offlinePct = $total > 0 ? round(($offline / $total) * 100) : 0;
-        $warningPct = $total > 0 ? round(($warning / $total) * 100) : 0;
 
         return [
             Stat::make('Total CCTV', $total)
@@ -50,11 +49,6 @@ class CctvStatsOverviewWidget extends BaseWidget
                 ->description("Berjalan Normal ({$onlinePct}%)")
                 ->descriptionIcon('heroicon-o-check-circle', IconPosition::Before)
                 ->color('success'),
-
-            Stat::make('Warning', $warning)
-                ->description("Signal Dalam Gangguan ({$warningPct}%)")
-                ->descriptionIcon('heroicon-o-exclamation-triangle', IconPosition::Before)
-                ->color('warning'),
 
             Stat::make('Offline', $offline)
                 ->description("Tidak Terhubung ({$offlinePct}%)")

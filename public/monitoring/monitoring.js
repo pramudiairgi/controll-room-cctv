@@ -96,7 +96,6 @@ function renderGrid() {
 
 function renderStats() {
   const onlineCount = cameras.filter(c => c.status === 'online').length;
-  const warningCount = cameras.filter(c => c.status === 'warning').length;
   const offlineCount = cameras.filter(c => c.status === 'offline').length;
 
   const statsEl = document.getElementById('stats');
@@ -105,10 +104,6 @@ function renderStats() {
       <div class="stat-item">
         <span class="stat-dot online"></span>
         <span>${onlineCount} Online</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-dot warning"></span>
-        <span>${warningCount} Warning</span>
       </div>
       <div class="stat-item">
         <span class="stat-dot offline"></span>
