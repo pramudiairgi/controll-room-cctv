@@ -234,6 +234,7 @@ document.getElementById('logout-btn')?.addEventListener('click', logout);
 
 // Keep navbar visible while interacting
 document.getElementById('navbar')?.addEventListener('mouseenter', showNavbar);
+document.addEventListener('mousemove', showNavbar);
 document.getElementById('search')?.addEventListener('focus', showNavbar);
 document.getElementById('category-filter')?.addEventListener('focus', showNavbar);
 document.getElementById('status-filter')?.addEventListener('focus', showNavbar);
