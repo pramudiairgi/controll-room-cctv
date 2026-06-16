@@ -58,6 +58,11 @@
   animation: glass-in 0.3s var(--easing-default) forwards;
 }
 
+.filter-icon {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
 .filter-divider {
   width: 1px;
   height: 20px;

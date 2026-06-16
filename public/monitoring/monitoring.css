@@ -111,6 +111,11 @@
   display: none;
 }
 
+.filter-icon {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
 .filter-divider {
   width: 1px;
   height: 20px;
