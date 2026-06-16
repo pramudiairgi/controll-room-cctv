@@ -107,30 +107,42 @@ function applyFilters() {
     if (show) visibleCount++;
   });
 
-  // Calculate optimal grid layout — pixel-perfect, no gaps
+  // Calculate optimal grid layout — exact 16:9 cells
   const vw = window.innerWidth;
   const vh = window.innerHeight;
+  const targetAspect = 16 / 9;
 
   let cols, rows;
   if (visibleCount <= 1) {
     cols = 1;
     rows = 1;
   } else {
-    cols = Math.ceil(Math.sqrt(visibleCount * (vw / vh)));
-    cols = Math.min(cols, visibleCount);
-    rows = Math.ceil(visibleCount / cols);
+    // Find layout where cells are closest to 16:9
+    let bestDiff = Infinity;
+    cols = 1;
+    rows = visibleCount;
 
-    const cellW = vw / cols;
-    const cellH = cellW * (9 / 16);
-    if (cellH * rows > vh) {
-      rows = Math.floor(vh / cellH);
-      rows = Math.max(rows, 1);
-      cols = Math.ceil(visibleCount / rows);
+    for (let c = 1; c <= visibleCount; c++) {
+      const r = Math.ceil(visibleCount / c);
+      const cellW = vw / c;
+      const cellH = vh / r;
+      const aspect = cellW / cellH;
+      const diff = Math.abs(aspect - targetAspect);
+
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        cols = c;
+        rows = r;
+      }
     }
   }
 
-  grid.style.gridTemplateColumns = `repeat(${cols}, ${vw / cols}px)`;
-  grid.style.gridTemplateRows = `repeat(${rows}, ${vh / rows}px)`;
+  // Use exact 16:9 cell dimensions
+  const cellW = vw / cols;
+  const cellH = cellW * (9 / 16);
+
+  grid.style.gridTemplateColumns = `repeat(${cols}, ${cellW}px)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, ${cellH}px)`;
 
   if (count) count.textContent = `${visibleCount} / ${cameras.length} kamera`;
 }
