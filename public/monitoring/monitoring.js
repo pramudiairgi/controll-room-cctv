@@ -136,11 +136,13 @@ function resetToolbarTimeout() {
   clearTimeout(toolbarTimeout);
   const filtersEl = document.getElementById('toolbar-filters');
   filtersEl?.classList.remove('hidden');
+  showFilters = true;
+  document.getElementById('toolbar-toggle')?.classList.add('active');
   toolbarTimeout = setTimeout(() => {
     filtersEl?.classList.add('hidden');
     showFilters = false;
     document.getElementById('toolbar-toggle')?.classList.remove('active');
-  }, 3000);
+  }, 5000);
 }
 
 function renderCategoryFilters() {

@@ -13,19 +13,13 @@
   <!-- Full Map -->
   <div id="map"></div>
 
-  <!-- Filter Group (top-left, stacked) -->
-  <div class="filter-group">
-    <div class="filter-item glass-panel">
-      <input id="search" type="text" class="filter-input" placeholder="Search kamera..." />
-    </div>
-
-    <div class="filter-item glass-panel">
-      <select id="category-filter" class="filter-select"></select>
-    </div>
-
-    <div class="filter-item glass-panel">
-      <select id="status-filter" class="filter-select"></select>
-    </div>
+  <!-- Filter Bar (top-left, horizontal) -->
+  <div class="filter-group glass-panel">
+    <input id="search" type="text" class="filter-input" placeholder="Search kamera..." />
+    <div class="filter-divider"></div>
+    <select id="category-filter" class="filter-select"></select>
+    <div class="filter-divider"></div>
+    <select id="status-filter" class="filter-select"></select>
   </div>
 
   <!-- Nav Pill (top-right) -->
