@@ -320,6 +320,17 @@
     pointer-events: none;
 }
 
+.video-container .yt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
 /* Overlay */
 .overlay {
     position: fixed;
