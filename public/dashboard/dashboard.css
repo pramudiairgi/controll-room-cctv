@@ -8,6 +8,42 @@
   z-index: var(--z-map);
 }
 
+/* Custom Map Pin */
+.map-pin {
+  position: relative;
+}
+
+.map-pin img {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+/* Pulse ring for online cameras */
+.map-pin .pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-success);
+  opacity: 0;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
 /* Filter Group (top-left) */
 .filter-group {
   position: fixed;

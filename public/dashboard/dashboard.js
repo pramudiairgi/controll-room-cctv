@@ -72,8 +72,16 @@ function renderStats() {
 }
 
 function createPinIcon(status) {
-  return L.icon({
-    iconUrl: '/icons/cctv-icon.png',
+  const html = `
+    <div class="map-pin">
+      ${status === 'online' ? '<div class="pulse-ring"></div>' : ''}
+      <img src="/icons/cctv-icon.png" width="32" height="32" draggable="false" />
+    </div>
+  `;
+
+  return L.divIcon({
+    html,
+    className: '',
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     tooltipAnchor: [0, -34],
