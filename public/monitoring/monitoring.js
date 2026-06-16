@@ -107,7 +107,7 @@ function applyFilters() {
     if (show) visibleCount++;
   });
 
-  // Calculate optimal grid layout
+  // Calculate optimal grid layout — pixel-perfect, no gaps
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
@@ -116,12 +116,10 @@ function applyFilters() {
     cols = 1;
     rows = 1;
   } else {
-    // Try most cols first (biggest cells), shrink if rows overflow viewport
     cols = Math.ceil(Math.sqrt(visibleCount * (vw / vh)));
     cols = Math.min(cols, visibleCount);
     rows = Math.ceil(visibleCount / cols);
 
-    // Check if cells exceed viewport height — reduce cols
     const cellW = vw / cols;
     const cellH = cellW * (9 / 16);
     if (cellH * rows > vh) {
@@ -131,8 +129,8 @@ function applyFilters() {
     }
   }
 
-  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+  grid.style.gridTemplateColumns = `repeat(${cols}, ${vw / cols}px)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, ${vh / rows}px)`;
 
   if (count) count.textContent = `${visibleCount} / ${cameras.length} kamera`;
 }
