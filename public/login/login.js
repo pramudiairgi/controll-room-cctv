@@ -3,8 +3,10 @@ async function checkAuth() {
   if (!token) return;
 
   try {
-    await apiFetch('/auth/me');
-    window.location.href = '/dashboard';
+    const { data } = await apiFetch('/auth/me');
+    if (data && data.id) {
+      window.location.href = '/dashboard';
+    }
   } catch {
     localStorage.removeItem('token');
   }

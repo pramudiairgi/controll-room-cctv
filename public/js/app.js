@@ -50,7 +50,9 @@ async function apiFetch(path, options = {}) {
 
   if (response.status === 401) {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    if (!window.location.pathname.startsWith('/login')) {
+      window.location.href = '/login';
+    }
     throw new Error('Unauthorized');
   }
 
