@@ -25,15 +25,7 @@
   font-size: 0;
 }
 
-/* Strict 16:9 aspect ratio container */
-.camera-cell .aspect-video {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 16 / 9;
-}
-
-/* Iframe pinned to all 4 corners — no gap */
+/* Iframe pinned to all 4 corners of cell — no gap */
 .camera-cell iframe {
   position: absolute;
   top: 0;

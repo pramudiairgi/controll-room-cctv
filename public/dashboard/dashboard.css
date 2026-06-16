@@ -306,7 +306,6 @@
     width: calc(100% + 2 * var(--space-6));
     margin: 0 calc(-1 * var(--space-6)) calc(-1 * var(--space-6));
     aspect-ratio: 16 / 9;
-    border-radius: 0;
     overflow: hidden;
     z-index: 1;
 }
