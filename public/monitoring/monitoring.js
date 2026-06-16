@@ -69,9 +69,17 @@ function renderGrid() {
     if (c.stream_id && isValidYouTubeId(c.stream_id)) {
       return `
         <div class="camera-cell">
-          <iframe src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+          <div class="camera-placeholder">
+            <img src="/thumbnail-offline.svg" alt="Thumbnail ${escapeHtml(c.name)}" onerror="this.style.display='none'" />
+            <div class="camera-placeholder-info">
+              <p class="camera-placeholder-name">${escapeHtml(c.name)}</p>
+              <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
+            </div>
+          </div>
+          <iframe data-src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
                   allow="autoplay; encrypted-media"
-                  title="${escapeHtml(c.name)}"></iframe>
+                  title="${escapeHtml(c.name)}"
+                  loading="lazy"></iframe>
         </div>
       `;
     }
@@ -88,6 +96,27 @@ function renderGrid() {
   }).join('');
 
   if (count) count.textContent = `${filtered.length} / ${cameras.length} kamera`;
+
+  initLazyLoad();
+}
+
+function initLazyLoad() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const iframe = entry.target;
+        if (iframe.dataset.src) {
+          iframe.src = iframe.dataset.src;
+          delete iframe.dataset.src;
+        }
+        observer.unobserve(iframe);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  document.querySelectorAll('.camera-cell iframe[data-src]').forEach(iframe => {
+    observer.observe(iframe);
+  });
 }
 
 function renderCategoryFilters() {
