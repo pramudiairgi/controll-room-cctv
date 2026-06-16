@@ -119,7 +119,7 @@
   top: var(--space-6);
   right: var(--space-6);
   z-index: var(--z-panel);
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-2) var(--space-5);
   border-radius: var(--radius-pill);
   animation: glass-in 0.3s var(--easing-default) forwards;
 }
