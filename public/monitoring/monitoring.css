@@ -69,72 +69,74 @@
   white-space: nowrap;
 }
 
-/* Filter Group (top-left) */
-.filter-group {
+/* Top Bar */
+.top-bar {
   position: fixed;
   top: var(--space-6);
   left: var(--space-6);
+  right: var(--space-6);
   z-index: var(--z-panel);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   animation: glass-in 0.3s var(--easing-default) forwards;
 }
 
-/* Toolbar Toggle Button */
+.search-input {
+  max-width: 240px;
+  flex-shrink: 0;
+}
+
+.top-bar-spacer {
+  flex: 1;
+}
+
+/* Toolbar Toggle */
 .toolbar-toggle {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
   cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--easing-default);
+}
+
+.toolbar-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
 }
 
 .toolbar-toggle.active {
   background: rgba(var(--color-primary-rgb), 0.20);
-  border-color: rgba(0, 122, 255, 0.40);
   color: var(--color-primary);
 }
 
-/* Toolbar Filters */
 .toolbar-filters {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-2);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .toolbar-filters.hidden {
   display: none;
 }
 
-/* Filter Items */
-.filter-item {
-  padding: var(--space-2) var(--space-3);
-}
-
-.search-input {
-  max-width: 200px;
-  border: none;
-  background: transparent;
-  padding: 0;
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--glass-border);
+  flex-shrink: 0;
 }
 
 .camera-count {
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
-  text-align: center;
-}
-
-/* Nav Pill Container (top-right) */
-.nav-pill-container {
-  position: fixed;
-  top: var(--space-6);
-  right: var(--space-6);
-  z-index: var(--z-panel);
-  padding: var(--space-2) var(--space-3);
-  animation: glass-in 0.3s var(--easing-default) forwards;
+  flex-shrink: 0;
 }
 
 /* Stats Panel */
