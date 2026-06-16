@@ -136,7 +136,7 @@ function renderDetailPanel() {
 
   const videoHtml = c.stream_id && isValidYouTubeId(c.stream_id)
     ? `<div class="video-container">
-        <iframe src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3"
+        <iframe src="https://www.youtube.com/embed/${escapeHtml(c.stream_id)}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3&showinfo=0&fs=0&cc_load_policy=0&playsinline=1&disablekb=1"
                 allow="autoplay; encrypted-media"></iframe>
       </div>`
     : '';
