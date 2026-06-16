@@ -72,31 +72,11 @@ function renderStats() {
 }
 
 function createPinIcon(status) {
-  const colors = {
-    online: { fill: '#34C759', stroke: '#2DA44E' },
-    warning: { fill: '#FF9500', stroke: '#E08600' },
-    offline: { fill: '#FF3B30', stroke: '#E0342B' },
-  };
-  const { fill, stroke } = colors[status] || colors.offline;
-
-  const html = `
-    <div class="map-pin">
-      ${status === 'online' ? '<div class="pulse-ring"></div>' : ''}
-      <svg viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z"
-              fill="${fill}" stroke="${stroke}" stroke-width="2"/>
-        <circle cx="16" cy="15" r="7" fill="white" fill-opacity="0.9"/>
-        <circle cx="16" cy="15" r="4" fill="${fill}"/>
-      </svg>
-    </div>
-  `;
-
-  return L.divIcon({
-    html,
-    className: '',
-    iconSize: [32, 42],
-    iconAnchor: [16, 42],
-    tooltipAnchor: [0, -44],
+  return L.icon({
+    iconUrl: '/icons/cctv-icon.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    tooltipAnchor: [0, -34],
   });
 }
 
