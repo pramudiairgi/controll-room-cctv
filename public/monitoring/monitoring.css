@@ -144,7 +144,7 @@
   color: var(--color-text-primary);
 }
 
-/* Nav Pill Container (top-right, capsule) */
+/* Nav Pill Container (top-right, capsule) - hidden until hover */
 .nav-pill-container {
   position: fixed;
   top: var(--space-6);
@@ -153,6 +153,12 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-pill);
   animation: glass-in 0.3s var(--easing-default) forwards;
+  opacity: 0;
+  transition: opacity 0.3s var(--easing-default);
+}
+
+.monitoring-container:hover .nav-pill-container {
+  opacity: 1;
 }
 
 /* Stats Panel */
