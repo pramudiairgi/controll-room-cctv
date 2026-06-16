@@ -112,6 +112,33 @@ function applyFilters() {
     if (show) visibleCount++;
   });
 
+  // Calculate optimal grid layout
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  let cols, rows;
+  if (visibleCount <= 1) {
+    cols = 1;
+    rows = 1;
+  } else {
+    // Try most cols first (biggest cells), shrink if rows overflow viewport
+    cols = Math.ceil(Math.sqrt(visibleCount * (vw / vh)));
+    cols = Math.min(cols, visibleCount);
+    rows = Math.ceil(visibleCount / cols);
+
+    // Check if cells exceed viewport height — reduce cols
+    const cellW = vw / cols;
+    const cellH = cellW * (9 / 16);
+    if (cellH * rows > vh) {
+      rows = Math.floor(vh / cellH);
+      rows = Math.max(rows, 1);
+      cols = Math.ceil(visibleCount / rows);
+    }
+  }
+
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
   if (count) count.textContent = `${visibleCount} / ${cameras.length} kamera`;
 }
 
@@ -220,3 +247,5 @@ renderStatusFilters();
 loadCameras();
 loadUserInfo();
 showNavbar();
+
+window.addEventListener('resize', debounce(applyFilters, 150));
