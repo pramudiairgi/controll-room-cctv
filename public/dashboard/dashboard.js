@@ -2,6 +2,7 @@ let cameras = [];
 let map = null;
 let markers = [];
 let selectedCamera = null;
+let selectedStatus = '';
 
 function renderCategoryFilters() {
   const selects = document.querySelectorAll('.category-filter');
@@ -12,12 +13,20 @@ function renderCategoryFilters() {
   });
 }
 
+function renderStatusFilters() {
+  const selects = document.querySelectorAll('.status-filter');
+  selects.forEach(select => {
+    select.innerHTML = STATUSES.map(s =>
+      `<option value="${s.value}">${escapeHtml(s.label)}</option>`
+    ).join('');
+  });
+}
+
 async function loadCameras() {
   try {
     const { data } = await apiFetch('/cctvs');
     cameras = data;
     renderStats();
-    renderCameraList();
     renderMap();
   } catch {
     alert('Gagal memuat data kamera. Pastikan server backend berjalan.');
@@ -33,7 +42,8 @@ function getFilteredCameras() {
       c.name.toLowerCase().includes(search) ||
       (c.location && c.location.toLowerCase().includes(search));
     const matchCategory = !category || c.category === category;
-    return matchSearch && matchCategory;
+    const matchStatus = !selectedStatus || c.status === selectedStatus;
+    return matchSearch && matchCategory && matchStatus;
   });
 }
 
@@ -61,37 +71,13 @@ function renderStats() {
   }
 }
 
-function renderCameraList() {
-  const list = document.getElementById('camera-list');
-  if (!list) return;
-
-  const filtered = getFilteredCameras();
-
-  list.innerHTML = filtered.map(c => `
-    <div class="camera-item ${selectedCamera?.id === c.id ? 'active' : ''}"
-         data-id="${c.id}">
-      <div class="camera-info">
-        <div class="camera-name">${escapeHtml(c.name)}</div>
-        <div class="camera-location">${escapeHtml(c.location || 'Tidak diketahui')}</div>
-      </div>
-      <span class="status-badge ${escapeHtml(c.status)}">${escapeHtml(c.status)}</span>
-    </div>
-  `).join('');
-
-  list.querySelectorAll('.camera-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const id = parseInt(item.dataset.id);
-      selectCamera(id);
-    });
-  });
-}
-
 function renderMap() {
   if (!map) {
-    map = L.map('map').setView([-6.2088, 106.8456], 12);
+    map = L.map('map', { zoomControl: false }).setView([-6.2088, 106.8456], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
   }
 
   markers.forEach(m => map.removeLayer(m));
@@ -100,8 +86,8 @@ function renderMap() {
   const filtered = getFilteredCameras();
   filtered.forEach(c => {
     if (c.latitude && c.longitude) {
-      const color = c.status === 'online' ? '#22c55e' :
-                    c.status === 'warning' ? '#f59e0b' : '#ef4444';
+      const color = c.status === 'online' ? '#34C759' :
+                    c.status === 'warning' ? '#FF9500' : '#FF3B30';
 
       const marker = L.circleMarker([c.latitude, c.longitude], {
         radius: 8,
@@ -121,7 +107,6 @@ function renderMap() {
 
 function selectCamera(id) {
   selectedCamera = cameras.find(c => c.id === id);
-  renderCameraList();
   renderDetailPanel();
 }
 
@@ -184,7 +169,6 @@ function closeDetail() {
   selectedCamera = null;
   document.getElementById('detail-panel')?.classList.remove('open');
   document.getElementById('overlay')?.classList.remove('visible');
-  renderCameraList();
 }
 
 function logout() {
@@ -209,14 +193,17 @@ async function loadUserInfo() {
 
 // Init
 const handleSearch = debounce(() => {
-  renderCameraList();
   renderMap();
 });
 
 document.getElementById('search')?.addEventListener('input', handleSearch);
 
 document.getElementById('category-filter')?.addEventListener('change', () => {
-  renderCameraList();
+  renderMap();
+});
+
+document.getElementById('status-filter')?.addEventListener('change', (e) => {
+  selectedStatus = e.target.value;
   renderMap();
 });
 
@@ -224,5 +211,6 @@ document.getElementById('overlay')?.addEventListener('click', closeDetail);
 document.getElementById('logout-btn')?.addEventListener('click', logout);
 
 renderCategoryFilters();
+renderStatusFilters();
 loadCameras();
 loadUserInfo();

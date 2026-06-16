@@ -134,10 +134,12 @@ function toggleFilters() {
 
 function resetToolbarTimeout() {
   clearTimeout(toolbarTimeout);
-  const filterGroup = document.querySelector('.filter-group');
-  filterGroup?.classList.remove('hidden');
+  const filtersEl = document.getElementById('toolbar-filters');
+  filtersEl?.classList.remove('hidden');
   toolbarTimeout = setTimeout(() => {
-    filterGroup?.classList.add('hidden');
+    filtersEl?.classList.add('hidden');
+    showFilters = false;
+    document.getElementById('toolbar-toggle')?.classList.remove('active');
   }, 3000);
 }
 
@@ -195,12 +197,6 @@ document.getElementById('category-filter')?.addEventListener('change', (e) => {
 document.getElementById('status-filter')?.addEventListener('change', (e) => {
   selectedStatus = e.target.value;
   renderGrid();
-});
-
-document.getElementById('overlay')?.addEventListener('click', () => {
-  selectedCamera = null;
-  document.getElementById('detail-panel')?.classList.remove('open');
-  document.getElementById('overlay')?.classList.remove('visible');
 });
 
 document.getElementById('logout-btn')?.addEventListener('click', logout);
