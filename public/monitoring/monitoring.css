@@ -183,7 +183,7 @@
   animation: glass-in 0.3s var(--easing-default) forwards;
 }
 
-/* Stats Panel (capsule) */
+/* Stats Panel */
 .stats-panel {
   position: fixed;
   top: 80px;
@@ -194,7 +194,6 @@
   gap: 6px;
   padding: var(--space-3) var(--space-4);
   width: fit-content;
-  border-radius: var(--radius-pill);
   animation: glass-in 0.3s var(--easing-default) 0.1s forwards;
   opacity: 0;
 }
