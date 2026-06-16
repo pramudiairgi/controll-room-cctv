@@ -9,6 +9,7 @@ async function loadCameras() {
   try {
     const { data } = await apiFetch('/cctvs');
     cameras = data;
+    renderStats();
     renderGrid();
   } catch {
     alert('Gagal memuat data kamera.');
@@ -18,7 +19,7 @@ async function loadCameras() {
 function getFilteredCameras() {
   let filtered = cameras;
 
-  // Status filter (matches original logic)
+  // Status filter
   if (selectedStatus === 'offline') {
     filtered = filtered.filter(c => !c.is_live);
   } else if (selectedStatus) {
@@ -93,6 +94,30 @@ function renderGrid() {
   if (count) count.textContent = `${filtered.length} / ${cameras.length} kamera`;
 }
 
+function renderStats() {
+  const onlineCount = cameras.filter(c => c.status === 'online').length;
+  const warningCount = cameras.filter(c => c.status === 'warning').length;
+  const offlineCount = cameras.filter(c => c.status === 'offline').length;
+
+  const statsEl = document.getElementById('stats');
+  if (statsEl) {
+    statsEl.innerHTML = `
+      <div class="stat-item">
+        <span class="stat-dot online"></span>
+        <span>${onlineCount} Online</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-dot warning"></span>
+        <span>${warningCount} Warning</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-dot offline"></span>
+        <span>${offlineCount} Offline</span>
+      </div>
+    `;
+  }
+}
+
 function toggleFilters() {
   showFilters = !showFilters;
   const filtersEl = document.getElementById('toolbar-filters');
@@ -109,7 +134,7 @@ function toggleFilters() {
 
 function resetToolbarTimeout() {
   clearTimeout(toolbarTimeout);
-  const toolbar = document.getElementById('toolbar');
+  const toolbar = document.querySelector('.top-bar');
   toolbar?.classList.remove('hidden');
   toolbarTimeout = setTimeout(() => {
     toolbar?.classList.add('hidden');
@@ -134,6 +159,26 @@ function renderStatusFilters() {
   });
 }
 
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = '/login';
+}
+
+async function loadUserInfo() {
+  try {
+    const { data } = await apiFetch('/auth/me');
+    const nameEl = document.getElementById('user-name');
+    const emailEl = document.getElementById('user-email');
+    const avatarEl = document.getElementById('user-avatar');
+
+    if (nameEl) nameEl.textContent = data.name;
+    if (emailEl) emailEl.textContent = data.email;
+    if (avatarEl) avatarEl.textContent = data.name?.charAt(0)?.toUpperCase() || 'U';
+  } catch {
+    // Ignore error
+  }
+}
+
 // Init
 document.getElementById('toolbar-toggle')?.addEventListener('click', toggleFilters);
 
@@ -152,10 +197,19 @@ document.getElementById('status-filter')?.addEventListener('change', (e) => {
   renderGrid();
 });
 
+document.getElementById('overlay')?.addEventListener('click', () => {
+  selectedCamera = null;
+  document.getElementById('detail-panel')?.classList.remove('open');
+  document.getElementById('overlay')?.classList.remove('visible');
+});
+
+document.getElementById('logout-btn')?.addEventListener('click', logout);
+
 document.addEventListener('mousemove', resetToolbarTimeout);
 document.addEventListener('pointermove', resetToolbarTimeout);
 
 renderCategoryFilters();
 renderStatusFilters();
 loadCameras();
+loadUserInfo();
 resetToolbarTimeout();
