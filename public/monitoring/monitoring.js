@@ -7,7 +7,6 @@ async function loadCameras() {
   try {
     const { data } = await apiFetch('/cctvs');
     cameras = data;
-    renderStats();
     renderGrid();
   } catch {
     alert('Gagal memuat data kamera.');
@@ -89,25 +88,6 @@ function renderGrid() {
   }).join('');
 
   if (count) count.textContent = `${filtered.length} / ${cameras.length} kamera`;
-}
-
-function renderStats() {
-  const onlineCount = cameras.filter(c => c.status === 'online').length;
-  const offlineCount = cameras.filter(c => c.status === 'offline').length;
-
-  const statsEl = document.getElementById('stats');
-  if (statsEl) {
-    statsEl.innerHTML = `
-      <div class="stat-item">
-        <span class="stat-dot online"></span>
-        <span>${onlineCount} Online</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-dot offline"></span>
-        <span>${offlineCount} Offline</span>
-      </div>
-    `;
-  }
 }
 
 function renderCategoryFilters() {
