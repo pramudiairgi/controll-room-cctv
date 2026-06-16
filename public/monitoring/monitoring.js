@@ -134,10 +134,10 @@ function toggleFilters() {
 
 function resetToolbarTimeout() {
   clearTimeout(toolbarTimeout);
-  const toolbar = document.querySelector('.top-bar');
-  toolbar?.classList.remove('hidden');
+  const filterPanel = document.querySelector('.filter-panel');
+  filterPanel?.classList.remove('hidden');
   toolbarTimeout = setTimeout(() => {
-    toolbar?.classList.add('hidden');
+    filterPanel?.classList.add('hidden');
   }, 3000);
 }
 
