@@ -1,47 +1,54 @@
-/* Monitoring Container */
-.monitoring-container {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
+/* ============================================================
+   MONITORING — Full-viewport CCTV grid + floating auto-hide navbar
+   ============================================================ */
 
-/* Camera Grid */
+/* --- Camera Grid (fills viewport, no CLS) --- */
 .camera-grid {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: 1fr;
   gap: 0;
   background: #000;
 }
 
+/* --- Camera Cell --- */
 .camera-cell {
   position: relative;
   overflow: hidden;
+  background: #000;
 }
 
-.camera-cell iframe {
+/* Strict 16:9 aspect ratio wrapper */
+.camera-cell .aspect-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Video / iframe fills wrapper, no distortion */
+.camera-cell iframe,
+.camera-cell video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: none;
+  object-fit: cover;
   pointer-events: none;
-  z-index: 1;
 }
 
-/* Placeholder for offline cameras */
+/* Offline placeholder */
 .camera-placeholder {
-  position: relative;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  background: var(--color-bg-secondary);
+  background: var(--color-bg-primary);
 }
 
 .camera-placeholder img {
@@ -58,7 +65,7 @@
   left: 0;
   right: 0;
   padding: var(--space-2) var(--space-3);
-  background: linear-gradient(transparent, rgba(15, 23, 42, 0.9));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,26 +79,31 @@
   white-space: nowrap;
 }
 
-/* Filter Bar (top center, horizontal capsule) */
-.filter-bar {
+/* --- Floating Navbar (auto-hide after 3s) --- */
+.navbar {
   position: fixed;
-  top: var(--space-6);
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: var(--z-panel);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-4) 0 0;
+  transform: translateY(0);
   opacity: 1;
-  transition: opacity 0.3s var(--easing-default);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
 }
 
-.filter-bar.hidden {
+.navbar.hidden {
+  transform: translateY(-100%);
   opacity: 0;
   pointer-events: none;
 }
 
-.filter-group {
+.navbar-inner {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -155,24 +167,29 @@
   color: var(--color-text-primary);
 }
 
-/* Nav Pill Container (top-right, capsule) - hidden until hover */
-.nav-pill-container {
-  position: fixed;
-  top: var(--space-6);
-  right: var(--space-6);
-  z-index: var(--z-panel);
-  padding: var(--space-2) var(--space-5);
+.navbar-link {
+  background: rgba(0, 122, 255, 0.15);
+  border: 0.5px solid rgba(0, 122, 255, 0.30);
   border-radius: var(--radius-pill);
-  animation: glass-in 0.3s var(--easing-default) forwards;
-  opacity: 0;
-  transition: opacity 0.3s var(--easing-default);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
 }
 
-.monitoring-container:hover .nav-pill-container {
-  opacity: 1;
+.navbar-link:hover {
+  background: rgba(0, 122, 255, 0.25);
+  border-color: rgba(0, 122, 255, 0.50);
 }
 
-/* User Menu (capsule) */
+.camera-count {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
+}
+
+/* --- User Menu (bottom-left) --- */
 .user-menu {
   position: fixed;
   bottom: var(--space-6);

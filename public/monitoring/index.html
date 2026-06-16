@@ -9,47 +9,42 @@
   <meta name="description" content="Manajemen Servis & Dashboard Pemantauan CCTV" />
 </head>
 <body>
-  <div class="monitoring-container">
-    <!-- Camera Grid -->
-    <div id="camera-grid" class="camera-grid"></div>
+  <!-- Full-screen grid: lives in document flow, always fills viewport -->
+  <div id="camera-grid" class="camera-grid"></div>
 
-    <!-- Filter Bar (top-left, horizontal capsule) -->
-    <div class="filter-bar">
-      <div class="filter-group glass-panel">
-        <svg class="filter-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/>
-        </svg>
-        <input id="search" type="text" class="filter-input" placeholder="Search kamera..." />
-        <div class="filter-divider"></div>
-        <select id="category-filter" class="filter-select"></select>
-        <div class="filter-divider"></div>
-        <select id="status-filter" class="filter-select"></select>
+  <!-- Floating navbar: fixed, z-index above grid, auto-hides after 3s -->
+  <nav id="navbar" class="navbar">
+    <div class="navbar-inner glass-panel">
+      <svg class="filter-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/>
+      </svg>
+      <input id="search" type="text" class="filter-input" placeholder="Search kamera..." />
+      <div class="filter-divider"></div>
+      <select id="category-filter" class="filter-select"></select>
+      <div class="filter-divider"></div>
+      <select id="status-filter" class="filter-select"></select>
+      <div class="filter-divider"></div>
+      <a href="/dashboard" class="navbar-link">Dashboard</a>
+    </div>
+    <span id="camera-count" class="camera-count"></span>
+  </nav>
+
+  <!-- User menu: bottom-left, always visible -->
+  <div class="user-menu glass-panel">
+    <div class="user-info">
+      <div id="user-avatar" class="user-avatar">U</div>
+      <div class="user-details">
+        <div id="user-name" class="user-name">User</div>
+        <div id="user-email" class="user-email">-</div>
       </div>
-      <span id="camera-count" class="camera-count"></span>
     </div>
-
-    <!-- Nav Pill (top-right) -->
-    <div class="nav-pill-container glass-panel">
-      <a href="/dashboard" class="glass-pill">Dashboard</a>
-    </div>
-
-    <!-- User Menu -->
-    <div class="user-menu glass-panel">
-      <div class="user-info">
-        <div id="user-avatar" class="user-avatar">U</div>
-        <div class="user-details">
-          <div id="user-name" class="user-name">User</div>
-          <div id="user-email" class="user-email">-</div>
-        </div>
-      </div>
-      <button id="logout-btn" class="glass-btn logout-btn" aria-label="Logout">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <polyline points="16 17 21 12 16 7"/>
-          <line x1="21" x2="9" y1="12" y2="12"/>
-        </svg>
-      </button>
-    </div>
+    <button id="logout-btn" class="glass-btn logout-btn" aria-label="Logout">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" x2="9" y1="12" y2="12"/>
+      </svg>
+    </button>
   </div>
 
   <script src="/js/app.js"></script>
