@@ -18,23 +18,22 @@
   background: #000;
 }
 
-/* Strict 16:9 aspect ratio wrapper */
+/* Strict 16:9 aspect ratio container */
 .camera-cell .aspect-video {
-  position: absolute;
-  inset: 0;
+  position: relative;
   width: 100%;
   height: 100%;
+  aspect-ratio: 16 / 9;
 }
 
-/* Video / iframe fills wrapper, no distortion */
-.camera-cell iframe,
-.camera-cell video {
+/* Iframe pinned to all 4 corners — no gap */
+.camera-cell iframe {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border: none;
-  object-fit: cover;
   pointer-events: none;
 }
 

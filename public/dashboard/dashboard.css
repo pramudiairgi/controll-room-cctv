@@ -305,13 +305,16 @@
     position: relative;
     width: calc(100% + 2 * var(--space-6));
     margin: 0 calc(-1 * var(--space-6)) calc(-1 * var(--space-6));
-    aspect-ratio: 16/9;
+    aspect-ratio: 16 / 9;
     border-radius: 0;
     overflow: hidden;
     z-index: 1;
 }
 
 .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     border: none;
