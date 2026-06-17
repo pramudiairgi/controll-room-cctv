@@ -2,7 +2,6 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan filament:cache-components"
 healthcheckPath = "/up"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
@@ -13,3 +12,6 @@ command = "php artisan serve --host=0.0.0.0 --port=$PORT"
 
 [process.queue]
 command = "php artisan queue:work --sleep=3 --tries=3 --max-time=3600"
+
+[process.scheduler]
+command = "php artisan schedule:work"
