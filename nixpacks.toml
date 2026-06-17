@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["php83", "php83Packages.composer", "postgresql", "nodejs_20"]
-
-[phases.build]
-cmds = ["composer install --no-dev --optimize-autoloader --no-interaction", "npm install && npm run build"]
-
-[start]
-cmd = "php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan filament:cache-components && php artisan serve --host=0.0.0.0 --port=$PORT"
