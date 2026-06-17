@@ -1,8 +1,11 @@
 [phases.setup]
 nixPkgs = ["..."]
 
+[phases.install]
+cmds = ["rm -rf node_modules", "npm ci"]
+
 [phases.build]
-cmds = ["rm -rf node_modules", "npm ci", "npm run build"]
+cmds = ["npm run build"]
 
 [start]
 cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
