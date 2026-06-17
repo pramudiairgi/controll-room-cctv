@@ -29,7 +29,7 @@ class YoutubeLiveService
             foreach ($response->json('items', []) as $item) {
                 $id = $item['id'];
                 $details = $item['liveStreamingDetails'] ?? null;
-                $results[$id] = $details && ! isset($details['actualEndTime']);
+                $results[$id] = $details && isset($details['actualStartTime']) && ! isset($details['actualEndTime']);
             }
         }
 
