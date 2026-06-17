@@ -2,7 +2,7 @@
 nixPkgs = ["..."]
 
 [phases.install]
-cmds = ["rm -rf node_modules", "npm ci"]
+cmds = ["composer install --no-dev --optimize-autoloader --no-interaction", "rm -rf node_modules", "npm ci"]
 
 [phases.build]
 cmds = ["npm run build"]
