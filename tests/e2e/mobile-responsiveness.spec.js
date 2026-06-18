@@ -60,6 +60,15 @@ test.describe('Login Page - Mobile Responsiveness', () => {
 
 test.describe('Dashboard Page - Mobile Responsiveness', () => {
   test.beforeEach(async ({ page }) => {
+    await page.route('**/api/auth/me', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 1, name: 'Test User', role: 'admin' }) })
+    );
+    await page.route('**/api/cctvs', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([]) })
+    );
+    await page.route('**/api/cctvs/*', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) })
+    );
     await page.goto('/dashboard');
   });
 
@@ -118,6 +127,15 @@ test.describe('Dashboard Page - Mobile Responsiveness', () => {
 
 test.describe('Monitoring Page - Mobile Responsiveness', () => {
   test.beforeEach(async ({ page }) => {
+    await page.route('**/api/auth/me', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 1, name: 'Test User', role: 'admin' }) })
+    );
+    await page.route('**/api/cctvs', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([]) })
+    );
+    await page.route('**/api/alerts/**', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([]) })
+    );
     await page.goto('/monitoring');
   });
 
@@ -179,6 +197,18 @@ test.describe('Monitoring Page - Mobile Responsiveness', () => {
 });
 
 test.describe('Shared - Touch & Accessibility', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/api/auth/me', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 1, name: 'Test User', role: 'admin' }) })
+    );
+    await page.route('**/api/cctvs', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([]) })
+    );
+    await page.route('**/api/cctvs/*', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) })
+    );
+  });
+
   test('all glass buttons have 44px minimum touch area', async ({ page }) => {
     await page.goto('/dashboard');
     const buttons = page.locator('.glass-btn');
