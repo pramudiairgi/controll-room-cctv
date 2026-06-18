@@ -4,6 +4,12 @@ export default defineConfig({
   testDir: './tests/e2e',
   timeout: 30000,
   retries: 0,
+  webServer: {
+    command: 'php artisan serve --port=8000',
+    port: 8000,
+    reuseExistingServer: true,
+    timeout: 10000,
+  },
   use: {
     baseURL: 'http://localhost:8000',
     screenshot: 'only-on-failure',
