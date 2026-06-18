@@ -124,26 +124,22 @@
     color: var(--color-text-primary);
 }
 
-/* Bottom Navigation (center) */
-.bottom-nav {
-    position: fixed;
-    bottom: var(--space-6);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: var(--z-panel);
-    animation: glass-in 0.3s var(--easing-default) 0.1s forwards;
-    opacity: 0;
+/* Nav Link (matches monitoring .navbar-link) */
+.nav-link {
+    background: rgba(0, 122, 255, 0.15);
+    border: 0.5px solid rgba(0, 122, 255, 0.30);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
 }
 
-.bottom-nav-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    text-decoration: none;
-    font-size: var(--text-sm);
-    font-weight: 500;
-    min-height: 44px;
+.nav-link:hover {
+    background: rgba(0, 122, 255, 0.25);
+    border-color: rgba(0, 122, 255, 0.50);
 }
 
 /* Stats Panel */
@@ -461,28 +457,23 @@
         border-radius: var(--radius-md);
     }
 
-    /* User menu - bottom left on mobile */
+    /* User menu - bottom center on mobile */
     .user-menu {
         bottom: var(--space-4);
-        left: var(--space-4);
+        left: 50%;
+        transform: translateX(-50%);
         right: auto;
-        transform: none;
         border-radius: var(--radius-pill);
     }
 
-    /* Bottom nav - full width on mobile */
-    .bottom-nav {
-        bottom: var(--space-4);
-        left: var(--space-4);
-        right: var(--space-4);
-        transform: none;
-        width: auto;
-    }
-
-    .bottom-nav-link {
+    /* Nav link - full width on mobile */
+    .nav-link {
         width: 100%;
+        text-align: center;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
         justify-content: center;
-        min-height: 48px;
     }
 
     /* Detail panel - bottom sheet on mobile */
