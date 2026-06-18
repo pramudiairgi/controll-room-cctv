@@ -127,19 +127,21 @@
 /* Nav Link (matches monitoring .navbar-link) */
 .nav-link {
     background: rgba(0, 122, 255, 0.15);
-    border: 0.5px solid rgba(0, 122, 255, 0.30);
+    border: 0.5px solid rgba(0, 122, 255, 0.3);
     border-radius: var(--radius-pill);
     padding: var(--space-1) var(--space-3);
     font-size: var(--text-sm);
-    color: var(--color-primary);
+    color: var(--color-text-primary);
     text-decoration: none;
-    transition: background 0.2s, border-color 0.2s;
+    transition:
+        background 0.2s,
+        border-color 0.2s;
     white-space: nowrap;
 }
 
 .nav-link:hover {
     background: rgba(0, 122, 255, 0.25);
-    border-color: rgba(0, 122, 255, 0.50);
+    border-color: rgba(0, 122, 255, 0.5);
 }
 
 /* Stats Panel */
@@ -457,12 +459,12 @@
         border-radius: var(--radius-md);
     }
 
-    /* User menu - bottom center on mobile */
+    /* User menu - bottom left on mobile */
     .user-menu {
         bottom: var(--space-4);
-        left: 50%;
-        transform: translateX(-50%);
+        left: var(--space-4);
         right: auto;
+        transform: none;
         border-radius: var(--radius-pill);
     }
 
@@ -498,7 +500,7 @@
 
     /* Swipe handle indicator */
     .detail-panel::after {
-        content: '';
+        content: "";
         position: sticky;
         top: 0;
         left: 50%;
