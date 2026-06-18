@@ -124,15 +124,26 @@
     color: var(--color-text-primary);
 }
 
-/* Nav Pill Container (top-right, capsule) */
-.nav-pill-container {
+/* Bottom Navigation (center) */
+.bottom-nav {
     position: fixed;
-    top: var(--space-6);
-    right: var(--space-6);
+    bottom: var(--space-6);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: var(--z-panel);
-    padding: var(--space-2) var(--space-5);
-    border-radius: var(--radius-pill);
-    animation: glass-in 0.3s var(--easing-default) forwards;
+    animation: glass-in 0.3s var(--easing-default) 0.1s forwards;
+    opacity: 0;
+}
+
+.bottom-nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    min-height: 44px;
 }
 
 /* Stats Panel */
@@ -450,13 +461,28 @@
         border-radius: var(--radius-md);
     }
 
-    /* User menu - bottom center on mobile */
+    /* User menu - bottom left on mobile */
     .user-menu {
         bottom: var(--space-4);
-        left: 50%;
-        transform: translateX(-50%);
+        left: var(--space-4);
         right: auto;
+        transform: none;
         border-radius: var(--radius-pill);
+    }
+
+    /* Bottom nav - full width on mobile */
+    .bottom-nav {
+        bottom: var(--space-4);
+        left: var(--space-4);
+        right: var(--space-4);
+        transform: none;
+        width: auto;
+    }
+
+    .bottom-nav-link {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
     }
 
     /* Detail panel - bottom sheet on mobile */
