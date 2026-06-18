@@ -80,6 +80,19 @@ test.describe('Dashboard Page - Mobile Responsiveness', () => {
     expect(box.x + box.width).toBeLessThanOrEqual(376);
   });
 
+  test('search icon is visible next to search input on mobile', async ({ page }) => {
+    const icon = page.locator('.filter-icon').first();
+    const input = page.locator('#search');
+    const iconBox = await icon.boundingBox();
+    const inputBox = await input.boundingBox();
+    expect(iconBox).not.toBeNull();
+    expect(inputBox).not.toBeNull();
+    // Icon should be to the left of input (icon right edge <= input left edge + small tolerance)
+    expect(iconBox.x + iconBox.width).toBeLessThanOrEqual(inputBox.x + 5);
+    // Both should be vertically aligned (within 5px)
+    expect(Math.abs(iconBox.y + iconBox.height / 2 - (inputBox.y + inputBox.height / 2))).toBeLessThanOrEqual(5);
+  });
+
   test('filter input is not fixed 200px on mobile', async ({ page }) => {
     const input = page.locator('#search');
     const width = await input.evaluate(el =>
@@ -145,6 +158,19 @@ test.describe('Monitoring Page - Mobile Responsiveness', () => {
     expect(box).not.toBeNull();
     expect(box.x).toBeGreaterThanOrEqual(0);
     expect(box.x + box.width).toBeLessThanOrEqual(376);
+  });
+
+  test('search icon is visible next to search input on mobile', async ({ page }) => {
+    const icon = page.locator('.filter-icon').first();
+    const input = page.locator('#search');
+    const iconBox = await icon.boundingBox();
+    const inputBox = await input.boundingBox();
+    expect(iconBox).not.toBeNull();
+    expect(inputBox).not.toBeNull();
+    // Icon should be to the left of input
+    expect(iconBox.x + iconBox.width).toBeLessThanOrEqual(inputBox.x + 5);
+    // Both should be vertically aligned
+    expect(Math.abs(iconBox.y + iconBox.height / 2 - (inputBox.y + inputBox.height / 2))).toBeLessThanOrEqual(5);
   });
 
   test('navbar filter inputs fit on mobile', async ({ page }) => {

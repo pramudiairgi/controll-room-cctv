@@ -21,27 +21,29 @@
         <!-- Floating navbar: fixed, z-index above grid, auto-hides after 3s -->
         <nav id="navbar" class="navbar" aria-label="Camera filters">
             <div class="navbar-inner glass-panel">
-                <svg
-                    class="filter-icon"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.34-4.34" />
-                </svg>
-                <input
-                    id="search"
-                    type="text"
-                    class="filter-input"
-                    placeholder="Search camera..."
-                />
+                <div class="search-row">
+                    <svg
+                        class="filter-icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.34-4.34" />
+                    </svg>
+                    <input
+                        id="search"
+                        type="text"
+                        class="filter-input"
+                        placeholder="Search camera..."
+                    />
+                </div>
                 <div class="filter-divider"></div>
                 <select id="category-filter" class="filter-select"></select>
                 <div class="filter-divider"></div>

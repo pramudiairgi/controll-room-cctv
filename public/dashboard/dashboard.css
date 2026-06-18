@@ -65,6 +65,10 @@
     animation: glass-in 0.3s var(--easing-default) forwards;
 }
 
+.search-row {
+    display: contents;
+}
+
 .filter-icon {
     color: var(--color-text-secondary);
     flex-shrink: 0;
@@ -415,8 +419,20 @@
         border-radius: var(--radius-lg);
     }
 
-    .filter-input {
+    .filter-icon {
+        flex-shrink: 0;
+    }
+
+    .search-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
         width: 100%;
+    }
+
+    .filter-input {
+        flex: 1;
+        min-width: 0;
         min-height: 44px;
         padding: var(--space-2);
     }
