@@ -107,6 +107,8 @@ function applyFilters() {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const targetAspect = 16 / 9;
+  const isMobile = vw <= 768;
+  const maxCols = isMobile ? 2 : 4;
 
   let cols, rows;
   if (visibleCount <= 1) {
@@ -118,7 +120,7 @@ function applyFilters() {
     cols = 1;
     rows = visibleCount;
 
-    for (let c = 1; c <= visibleCount; c++) {
+    for (let c = 1; c <= Math.min(visibleCount, maxCols); c++) {
       const r = Math.ceil(visibleCount / c);
       const cellW = vw / c;
       const cellH = vh / r;

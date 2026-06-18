@@ -182,6 +182,56 @@ function closeDetail() {
   document.getElementById('overlay')?.classList.remove('visible');
 }
 
+// Swipe-down to close detail panel on mobile
+let touchStartY = 0;
+let touchCurrentY = 0;
+let isSwiping = false;
+
+function handleTouchStart(e) {
+  const panel = document.getElementById('detail-panel');
+  if (!panel || !panel.classList.contains('open')) return;
+  touchStartY = e.touches[0].clientY;
+  isSwiping = true;
+}
+
+function handleTouchMove(e) {
+  if (!isSwiping) return;
+  touchCurrentY = e.touches[0].clientY;
+  const diff = touchCurrentY - touchStartY;
+
+  // Only allow swiping down
+  if (diff > 0) {
+    const panel = document.getElementById('detail-panel');
+    if (panel) {
+      panel.style.transform = `translateY(${diff}px)`;
+      panel.style.transition = 'none';
+    }
+  }
+}
+
+function handleTouchEnd() {
+  if (!isSwiping) return;
+  isSwiping = false;
+
+  const diff = touchCurrentY - touchStartY;
+  const panel = document.getElementById('detail-panel');
+
+  if (panel) {
+    panel.style.transition = '';
+
+    // If swiped down more than 100px, close the panel
+    if (diff > 100) {
+      closeDetail();
+    } else {
+      // Snap back to open position
+      panel.style.transform = '';
+    }
+  }
+
+  touchStartY = 0;
+  touchCurrentY = 0;
+}
+
 function logout() {
   localStorage.removeItem('token');
   window.location.href = '/login';
@@ -220,6 +270,11 @@ document.getElementById('status-filter')?.addEventListener('change', (e) => {
 
 document.getElementById('overlay')?.addEventListener('click', closeDetail);
 document.getElementById('logout-btn')?.addEventListener('click', logout);
+
+// Touch events for swipe-to-close on mobile
+document.addEventListener('touchstart', handleTouchStart, { passive: true });
+document.addEventListener('touchmove', handleTouchMove, { passive: true });
+document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
 renderCategoryFilters();
 renderStatusFilters();

@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="stylesheet" href="/css/shared.css" />
         <link rel="stylesheet" href="/monitoring/monitoring.css" />
         <title>Control Room - Monitoring</title>
@@ -12,11 +12,14 @@
         />
     </head>
     <body>
+        <!-- Skip link for keyboard navigation -->
+        <a href="#camera-grid" class="skip-link">Skip to camera grid</a>
+
         <!-- Full-screen grid: lives in document flow, always fills viewport -->
-        <div id="camera-grid" class="camera-grid"></div>
+        <div id="camera-grid" class="camera-grid" role="region" aria-label="Camera grid"></div>
 
         <!-- Floating navbar: fixed, z-index above grid, auto-hides after 3s -->
-        <nav id="navbar" class="navbar">
+        <nav id="navbar" class="navbar" aria-label="Camera filters">
             <div class="navbar-inner glass-panel">
                 <svg
                     class="filter-icon"
@@ -28,6 +31,7 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    aria-hidden="true"
                 >
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.34-4.34" />

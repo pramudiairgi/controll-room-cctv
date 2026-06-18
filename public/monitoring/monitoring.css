@@ -256,3 +256,96 @@
   height: 32px;
   padding: 0;
 }
+
+/* ============================================================
+   MOBILE RESPONSIVE — Monitoring
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Navbar - full width, stacked filters */
+  .navbar {
+    padding: var(--space-3) var(--space-3) 0;
+  }
+
+  .navbar-inner {
+    flex-wrap: wrap;
+    padding: var(--space-3);
+    gap: var(--space-2);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .filter-icon {
+    display: none;
+  }
+
+  .filter-divider {
+    display: none;
+  }
+
+  .filter-input {
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-2);
+    background-color: var(--glass-bg-light);
+    border-radius: var(--radius-md);
+  }
+
+  .filter-select {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    padding: var(--space-2);
+    background-color: var(--glass-bg-light);
+    border-radius: var(--radius-md);
+  }
+
+  .navbar-link {
+    width: 100%;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .camera-count {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Camera grid - max 2 columns in portrait */
+  .camera-grid {
+    gap: 2px;
+  }
+
+  .camera-cell {
+    min-height: 120px;
+  }
+
+  /* Camera placeholder info - larger touch target */
+  .camera-placeholder-info {
+    padding: var(--space-3);
+    min-height: 44px;
+  }
+
+  .camera-placeholder-name {
+    font-size: var(--text-base);
+  }
+
+  /* User menu - bottom center */
+  .user-menu {
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+  }
+}
+
+/* Large phones / small tablets */
+@media (min-width: 480px) and (max-width: 768px) {
+  .camera-grid {
+    gap: 2px;
+  }
+}

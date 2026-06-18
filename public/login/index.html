@@ -2,32 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <link rel="stylesheet" href="/css/shared.css" />
   <link rel="stylesheet" href="/login/login.css" />
   <title>Control Room - Login</title>
   <meta name="description" content="Service Management & CCTV Monitoring Dashboard" />
 </head>
 <body>
+  <!-- Skip link for keyboard navigation -->
+  <a href="#login-form" class="skip-link">Skip to login form</a>
+
   <div class="login-container">
-    <form id="login-form" class="glass-card login-form">
+    <form id="login-form" class="glass-card login-form" aria-label="Login form">
       <h1>Control Room</h1>
       <p class="subtitle">CCTV Monitoring Dashboard</p>
 
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" type="email" required autocomplete="email" />
+        <input id="email" type="email" required autocomplete="email" aria-describedby="email-hint" />
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input id="password" type="password" required autocomplete="current-password" />
+        <input id="password" type="password" required autocomplete="current-password" aria-describedby="password-hint" />
       </div>
 
       <p id="error" class="error-message"></p>
 
-      <button id="login-btn" type="submit" class="btn-primary">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="login-btn" type="submit" class="btn-primary" aria-label="Login to Control Room">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="m10 17 5-5-5-5"/>
           <path d="M15 12H3"/>
           <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>

@@ -393,3 +393,105 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* ============================================================
+   MOBILE RESPONSIVE — Dashboard
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* Filter bar - full width, stacked on mobile */
+    .filter-bar {
+        top: var(--space-4);
+        left: var(--space-4);
+        right: var(--space-4);
+        transform: none;
+        width: auto;
+    }
+
+    .filter-group {
+        flex-wrap: wrap;
+        padding: var(--space-3);
+        gap: var(--space-2);
+        border-radius: var(--radius-lg);
+    }
+
+    .filter-input {
+        width: 100%;
+        min-height: 44px;
+        padding: var(--space-2);
+    }
+
+    .filter-divider {
+        display: none;
+    }
+
+    .filter-select {
+        flex: 1;
+        min-width: 0;
+        min-height: 44px;
+        padding: var(--space-2);
+        background-color: var(--glass-bg-light);
+        border-radius: var(--radius-md);
+    }
+
+    /* User menu - bottom center on mobile */
+    .user-menu {
+        bottom: var(--space-4);
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        border-radius: var(--radius-pill);
+    }
+
+    /* Detail panel - bottom sheet on mobile */
+    .detail-panel {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        max-height: 75vh;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        transform: translateY(100%);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .detail-panel.open {
+        transform: translateY(0);
+    }
+
+    /* Swipe handle indicator */
+    .detail-panel::after {
+        content: '';
+        position: sticky;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 36px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: var(--radius-pill);
+        margin: var(--space-2) auto var(--space-3);
+        display: block;
+        z-index: 2;
+    }
+
+    /* Video container in detail panel */
+    .video-container {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    /* Camera list in detail panel */
+    .camera-list {
+        max-height: 50vh;
+    }
+
+    .camera-item {
+        min-height: 44px;
+    }
+}

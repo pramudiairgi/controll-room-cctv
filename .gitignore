@@ -15,7 +15,9 @@
 /auth.json
 /node_modules
 /docs
-/tests
+/tests/*
+!/tests/e2e
+/test-results
 /public/build
 /public/fonts-manifest.dev.json
 /public/hot
@@ -31,4 +33,3 @@ Thumbs.db
 /public/index.txt
 /public/**/__next.*.txt
 /public/**/index.txt
-test-results/

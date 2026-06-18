@@ -4,11 +4,16 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   background: var(--color-bg-primary);
+  padding: var(--space-4);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
 }
 
 .login-form {
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -49,8 +54,11 @@
   background: var(--glass-bg);
   color: var(--color-text-primary);
   font-size: var(--text-base);
+  min-height: 48px;
   outline: none;
   transition: border-color var(--duration-fast) var(--easing-default);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .form-group input:focus {
@@ -72,6 +80,7 @@
   gap: var(--space-2);
   width: 100%;
   padding: var(--space-3);
+  min-height: 48px;
   position: relative;
 }
 
