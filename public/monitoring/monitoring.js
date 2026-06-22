@@ -7,6 +7,7 @@ let searchQuery = '';
 let selectedCategory = '';
 let selectedStatus = '';
 let gridRendered = false;
+let fullscreenCameraId = null;
 
 // ── Load data ──────────────────────────────────────────────
 async function loadCameras() {
@@ -85,6 +86,22 @@ function buildGrid() {
 
   grid.replaceChildren(fragment);
   lazyLoad();
+}
+
+function enterFullscreen(cameraId) {
+  const cell = document.querySelector(`.camera-cell[data-id="${cameraId}"]`);
+  if (!cell) return;
+  fullscreenCameraId = cameraId;
+  cell.classList.add('fullscreen');
+  document.getElementById('navbar')?.classList.add('hidden');
+}
+
+function exitFullscreen() {
+  if (fullscreenCameraId === null) return;
+  const cell = document.querySelector(`.camera-cell[data-id="${fullscreenCameraId}"]`);
+  if (cell) cell.classList.remove('fullscreen');
+  fullscreenCameraId = null;
+  showNavbar();
 }
 
 // ── Apply filters (show/hide only, no re-render) ───────────
