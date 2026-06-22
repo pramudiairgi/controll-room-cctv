@@ -25,6 +25,15 @@
   font-size: 0;
 }
 
+.camera-cell.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+}
+
 /* Iframe pinned to all 4 corners of cell */
 .camera-cell iframe {
   position: absolute;
