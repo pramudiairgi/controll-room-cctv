@@ -267,7 +267,7 @@ document.getElementById('camera-grid')?.addEventListener('click', e => {
   const cell = e.target.closest('.camera-cell');
   if (!cell) return;
   if (fullscreenCameraId === null) {
-    enterFullscreen(parseInt(cell.dataset.id));
+    enterFullscreen(parseInt(cell.dataset.id, 10));
   } else {
     exitFullscreen();
   }
