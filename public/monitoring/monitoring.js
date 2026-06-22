@@ -262,6 +262,23 @@ document.getElementById('search')?.addEventListener('input', showNavbar);
 document.getElementById('category-filter')?.addEventListener('change', showNavbar);
 document.getElementById('status-filter')?.addEventListener('change', showNavbar);
 
+// ── Fullscreen click & ESC ──────────────────────────────────
+document.getElementById('camera-grid')?.addEventListener('click', e => {
+  const cell = e.target.closest('.camera-cell');
+  if (!cell) return;
+  if (fullscreenCameraId === null) {
+    enterFullscreen(parseInt(cell.dataset.id));
+  } else {
+    exitFullscreen();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && fullscreenCameraId !== null) {
+    exitFullscreen();
+  }
+});
+
 // ── Init ───────────────────────────────────────────────────
 renderCategoryFilters();
 renderStatusFilters();
